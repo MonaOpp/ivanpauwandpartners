@@ -9,3 +9,30 @@
 body {
 	@apply bg-background text-foreground font-sans;
 }
+
+h1 {
+	font-family: 'DM Sans', sans-serif;
+	font-weight: 700;
+	font-style: italic;
+	font-size: 80px;
+	text-align: center;
+	vertical-align: middle;
+	text-transform: uppercase;
+	color: #fff;
+}
+
+@media (max-width: 767px) {
+	h1 {
+		font-size: 40px;
+	}
+}
+
+h2,
+h3 {
+	font-family: 'DM Sans', sans-serif;
+	font-weight: 800;
+	font-size: 80px;
+	text-align: center;
+	text-transform: uppercase;
+	color: #3A5F82;
+}

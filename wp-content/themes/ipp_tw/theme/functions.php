@@ -219,3 +219,23 @@ require get_template_directory() . '/inc/template-tags.php';
  * Functions which enhance the theme by hooking into WordPress.
  */
 require get_template_directory() . '/inc/template-functions.php';
+
+/**
+ * ACF field groups for banners and home slider.
+ */
+require get_template_directory() . '/inc/acf-fields.php';
+
+/**
+ * Enqueue Swiper.js on the front page.
+ */
+function ipp_tw_enqueue_swiper() {
+	if ( is_front_page() ) {
+		wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11' );
+		wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11', true );
+		wp_add_inline_script(
+			'swiper',
+			'document.addEventListener("DOMContentLoaded",function(){new Swiper(".home-swiper",{loop:true,autoplay:{delay:5000,disableOnInteraction:false},effect:"fade",fadeEffect:{crossFade:true},navigation:{prevEl:".slider-prev",nextEl:".slider-next"}})});'
+		);
+	}
+}
+add_action( 'wp_enqueue_scripts', 'ipp_tw_enqueue_swiper' );

@@ -14,6 +14,8 @@
 get_header();
 ?>
 
+	<?php get_template_part( 'template-parts/content/content', 'banner' ); ?>
+
 	<section id="primary">
 		<main id="main">
 
