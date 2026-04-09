@@ -9,6 +9,15 @@
  */
 
 /**
+ * Front page – remove layout-wrapper constraints from #page so sections
+ * can be full-width. Header/footer have their own layout-wrapper.
+ */
+body.home #page.layout-wrapper {
+	max-width: none;
+	padding-inline: 0;
+}
+
+/**
  * Post title styles
  *
  * These will be applied to all headings with a `page-title` or `entry-title`
@@ -435,8 +444,28 @@
 	position: relative;
 	z-index: 1;
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.home-slide__content h1,
+.home-slide__content h2 {
+	text-align: left;
+}
+
+.home-slide__content h2 {
+	font-family: 'DM Sans', sans-serif;
+	font-weight: 700;
+	font-style: italic;
+	font-size: 80px;
+	text-transform: uppercase;
+	color: #fff;
+}
+
+@media (max-width: 767px) {
+	.home-slide__content h2 {
+		font-size: 40px;
+	}
 }
 
 /* =============================================================

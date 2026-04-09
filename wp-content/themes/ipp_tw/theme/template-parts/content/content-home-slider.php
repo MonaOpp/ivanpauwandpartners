@@ -36,6 +36,7 @@ if ( is_array( $email ) ) {
 	<div class="swiper home-swiper">
 		<div class="swiper-wrapper">
 			<?php
+			$slide_index = 0;
 			while ( have_rows( 'slider_banner', 'option' ) ) :
 				the_row();
 				$image = get_sub_field( 'banner_image' );
@@ -49,18 +50,23 @@ if ( is_array( $email ) ) {
 				if ( ! $image_url ) {
 					continue;
 				}
+
+				$heading_tag = ( 0 === $slide_index ) ? 'h1' : 'h2';
 				?>
 				<div class="swiper-slide">
 					<div class="home-slide" style="background-image: url('<?php echo esc_url( $image_url ); ?>');">
 						<div class="home-slide__overlay"></div>
 						<?php if ( $text ) : ?>
 							<div class="home-slide__content layout-wrapper">
-								<h1><?php echo esc_html( $text ); ?></h1>
+								<<?php echo $heading_tag; ?>><?php echo esc_html( $text ); ?></<?php echo $heading_tag; ?>>
 							</div>
 						<?php endif; ?>
 					</div>
 				</div>
-			<?php endwhile; ?>
+			<?php
+				$slide_index++;
+			endwhile;
+			?>
 		</div>
 
 		<!-- Bottom bar: Prev/Next left, Social icons right -->
@@ -84,12 +90,12 @@ if ( is_array( $email ) ) {
 				<?php endif; ?>
 				<?php if ( $tel_number ) : ?>
 					<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $tel_number ) ); ?>" aria-label="<?php esc_attr_e( 'Phone', 'ipp_tw' ); ?>">
-						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/Vector.png' ) ); ?>" alt="Phone">
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/phone-1.png' ) ); ?>" alt="Phone">
 					</a>
 				<?php endif; ?>
 				<?php if ( $email ) : ?>
 					<a href="mailto:<?php echo esc_attr( $email ); ?>" aria-label="<?php esc_attr_e( 'Email', 'ipp_tw' ); ?>">
-						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/Vector-1.png' ) ); ?>" alt="Email">
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/mail-1.png' ) ); ?>" alt="Email">
 					</a>
 				<?php endif; ?>
 			</div>
