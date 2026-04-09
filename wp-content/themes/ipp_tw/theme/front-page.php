@@ -54,10 +54,9 @@ get_header();
 
                 <?php if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) : ?>
                     <?php
-                    $upload_dir           = wp_get_upload_dir();
                     $category_backgrounds = array(
-                        0 => $upload_dir['baseurl'] . '/2026/04/LandDevelopmentHome-scaled.jpg',
-                        1 => $upload_dir['baseurl'] . '/2026/04/Litigation-scaled.jpg',
+                        0 => '/wp-content/uploads/2026/04/LandDevelopmentHome-scaled.jpg',
+                        1 => '/wp-content/uploads/2026/04/Litigation-scaled.jpg',
                     );
                     $cat_index = 0;
                     ?>
@@ -66,11 +65,11 @@ get_header();
                             <?php $bg_image = isset( $category_backgrounds[ $cat_index ] ) ? $category_backgrounds[ $cat_index ] : ''; ?>
                             <div class="relative flex min-h-[420px] items-center justify-center bg-[#132E47] p-8 text-center text-white"
                                 <?php if ( $bg_image ) : ?>
-                                    style="background-image: url('<?php echo esc_attr( $bg_image ); ?>'); background-size: cover; background-position: center;"
+                                    style="background-image: url('<?php echo esc_url( $bg_image ); ?>'); background-size: cover; background-position: center;"
                                 <?php endif; ?>
                             >
                                 <?php if ( $bg_image ) : ?>
-                                    <div class="absolute inset-0" style="background-color: rgba(0, 0, 0, 0.55);"></div>
+                                    <div class="absolute inset-0" style="background-color: #0000008C;"></div>
                                 <?php endif; ?>
                                 <div class="relative z-10 w-full">
                                     <h3 class="mb-6 text-3xl font-extrabold uppercase leading-tight md:text-5xl text-white ">
@@ -119,6 +118,8 @@ get_header();
             </div>
         </main>
     </section>
+
+    <?php get_template_part( 'template-parts/content/content', 'sa-map' ); ?>
 
 <?php
 get_footer();

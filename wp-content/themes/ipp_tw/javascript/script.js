@@ -60,3 +60,50 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 		link.parentElement.classList.toggle( 'submenu-open', ! isOpen );
 	} );
 } );
+
+// Interactive SA province map
+( function () {
+	const buttons = document.querySelectorAll( '.province-btn' );
+	const images = document.querySelectorAll( '[data-province-img]' );
+
+	if ( ! buttons.length ) {
+		return;
+	}
+
+	function activate( key ) {
+		// Show matching image, hide others.
+		images.forEach( ( img ) => {
+			img.style.opacity = img.dataset.provinceImg === key ? '1' : '0';
+		} );
+
+		// Highlight active button.
+		buttons.forEach( ( btn ) => {
+			if ( btn.dataset.province === key ) {
+				btn.classList.add( 'border-[#AA7040]', 'text-white' );
+				btn.classList.remove( 'border-transparent', 'text-white/60' );
+			} else {
+				btn.classList.remove( 'border-[#AA7040]', 'text-white' );
+				btn.classList.add( 'border-transparent', 'text-white/60' );
+			}
+		} );
+	}
+
+	function deactivate() {
+		images.forEach( ( img ) => {
+			img.style.opacity = '0';
+		} );
+		buttons.forEach( ( btn ) => {
+			btn.classList.remove( 'border-[#AA7040]', 'text-white' );
+			btn.classList.add( 'border-transparent', 'text-white/60' );
+		} );
+	}
+
+	buttons.forEach( ( btn ) => {
+		btn.addEventListener( 'mouseenter', () => {
+			activate( btn.dataset.province );
+		} );
+		btn.addEventListener( 'mouseleave', () => {
+			deactivate();
+		} );
+	} );
+} )();
