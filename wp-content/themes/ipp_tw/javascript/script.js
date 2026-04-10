@@ -61,24 +61,98 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 	} );
 } );
 
-// Interactive SA province map
+// Interactive SA province map (SVG)
 ( function () {
-	const buttons = document.querySelectorAll( '.province-btn' );
-	const images = document.querySelectorAll( '[data-province-img]' );
-
-	if ( ! buttons.length ) {
+	const svg = document.getElementById( 'sa-map' );
+	if ( ! svg ) {
 		return;
 	}
 
-	function activate( key ) {
-		// Show matching image, hide others.
-		images.forEach( ( img ) => {
-			img.style.opacity = img.dataset.provinceImg === key ? '1' : '0';
-		} );
+	// Fill paths in SVG document order → province slug mapping.
+	// Index 0 = Lesotho (not a province, skip).
+	const PROVINCE_MAP = [
+		null,             // 0  – Lesotho
+		'eastern-cape',   // 1  – mask-2
+		'free-state',     // 2  – mask-3
+		'gauteng',        // 3  – mask-4
+		'limpopo',        // 4  – mask-5
+		'mpumalanga',     // 5  – mask-6
+		'nothern-cape',   // 6  – mask-7
+		'kwazulu-natal',  // 7  – mask-8
+		'north-west',     // 8  – mask-9
+		'western-cape',   // 9  – mask-10
+	];
 
-		// Highlight active button.
+	// Approximate visual centre of each province (SVG coords).
+	const PIN_CENTERS = {
+		'limpopo':       [ [ 693, 47 ], [ 612, 70 ], [ 675, 80 ], [ 632, 126 ], [ 708, 79 ] ],
+		'gauteng':       [ [ 605, 205 ], [ 581, 218 ], [ 602, 225 ], [ 588, 240 ], [ 607, 244 ] ],
+		'mpumalanga':    [ [ 727, 156 ], [ 711, 185 ], [ 661, 176 ], [ 659, 218 ], [ 704, 255 ] ],
+		'north-west':    [ [ 502, 169 ], [ 500, 270 ], [ 431, 238 ], [ 448, 294 ], [ 381, 259 ] ],
+		'free-state':    [ [ 550, 319 ], [ 576, 343 ], [ 503, 355 ], [ 518, 383 ], [ 479, 397 ] ],
+		'kwazulu-natal': [ [ 744, 318 ], [ 767, 358 ], [ 718, 361 ], [ 742, 382 ], [ 703, 398 ] ],
+		'nothern-cape':  [ [ 267, 387 ], [ 292, 421 ], [ 240, 425 ], [ 253, 464 ], [ 201, 483 ] ],
+		'western-cape':  [ [ 225, 636 ], [ 239, 664 ], [ 193, 706 ], [ 182, 686 ], [ 166, 717 ] ],
+		'eastern-cape':  [ [ 578, 521 ], [ 488, 529 ], [ 461, 571 ], [ 499, 626 ], [ 578, 576 ] ],
+	};
+
+	const fillPaths = svg.querySelectorAll( ':scope > path[fill="#EDEDED"]' );
+	const buttons   = document.querySelectorAll( '.province-btn' );
+	const sidebar   = {
+		defaultEl : document.getElementById( 'sa-map-default' ),
+		infoEl    : document.getElementById( 'sa-map-info' ),
+		nameEl    : document.getElementById( 'sa-map-province-name' ),
+		listEl    : document.getElementById( 'sa-map-flagship-list' ),
+		emptyEl   : document.getElementById( 'sa-map-no-projects' ),
+	};
+
+	let activeProvince = null;  // Currently locked province slug.
+	const pathBySlug   = {};    // slug → fill <path> element.
+	const pinBySlug    = {};    // slug → array of <circle> pin elements.
+
+	// ── Initialise province paths & pins ──────────────────────────
+	fillPaths.forEach( ( path, i ) => {
+		const slug = PROVINCE_MAP[ i ];
+		if ( ! slug ) {
+			return; // Skip Lesotho.
+		}
+
+		path.classList.add( 'province-path' );
+		path.dataset.province = slug;
+		pathBySlug[ slug ] = path;
+
+		// Create pin markers (one per coordinate pair).
+		const coordsList = PIN_CENTERS[ slug ];
+		if ( coordsList && coordsList.length ) {
+			pinBySlug[ slug ] = [];
+			coordsList.forEach( ( coords ) => {
+				const pin = document.createElementNS( 'http://www.w3.org/2000/svg', 'circle' );
+				pin.setAttribute( 'cx', coords[ 0 ] );
+				pin.setAttribute( 'cy', coords[ 1 ] );
+				pin.setAttribute( 'r', '3' );
+				pin.setAttribute( 'fill', '#ffffff' );
+				pin.setAttribute( 'stroke-width', '0' );
+				pin.classList.add( 'map-pin' );
+				pin.dataset.province = slug;
+				svg.appendChild( pin );
+				pinBySlug[ slug ].push( pin );
+			} );
+		}
+	} );
+
+	// ── Helpers ───────────────────────────────────────────────────
+	function highlightProvince( slug ) {
+		Object.values( pinBySlug ).forEach( ( pins ) => pins.forEach( ( p ) => p.classList.remove( 'visible' ) ) );
+		Object.values( pathBySlug ).forEach( ( p ) => p.classList.remove( 'province-hover' ) );
+
+		if ( slug && pinBySlug[ slug ] ) {
+			pinBySlug[ slug ].forEach( ( p ) => p.classList.add( 'visible' ) );
+		}
+	}
+
+	function activateButton( slug ) {
 		buttons.forEach( ( btn ) => {
-			if ( btn.dataset.province === key ) {
+			if ( btn.dataset.province === slug ) {
 				btn.classList.add( 'border-[#AA7040]', 'text-white' );
 				btn.classList.remove( 'border-transparent', 'text-white/60' );
 			} else {
@@ -88,22 +162,129 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 		} );
 	}
 
-	function deactivate() {
-		images.forEach( ( img ) => {
-			img.style.opacity = '0';
+	function lockProvince( slug ) {
+		// Toggle off if clicking the same province.
+		if ( activeProvince === slug ) {
+			activeProvince = null;
+			Object.values( pathBySlug ).forEach( ( p ) => p.classList.remove( 'province-active' ) );
+			Object.values( pinBySlug ).forEach( ( pins ) => pins.forEach( ( p ) => p.classList.remove( 'visible' ) ) );
+			activateButton( null );
+			sidebar.infoEl.classList.add( 'hidden' );
+			sidebar.defaultEl.classList.remove( 'hidden' );
+			return;
+		}
+
+		activeProvince = slug;
+
+		// Visual feedback on map.
+		Object.values( pathBySlug ).forEach( ( p ) => p.classList.remove( 'province-active' ) );
+		if ( pathBySlug[ slug ] ) {
+			pathBySlug[ slug ].classList.add( 'province-active' );
+		}
+		highlightProvince( slug );
+		activateButton( slug );
+
+		// Update sidebar.
+		sidebar.defaultEl.classList.add( 'hidden' );
+		sidebar.infoEl.classList.remove( 'hidden' );
+
+		const data = ( window.ippMapData && window.ippMapData[ slug ] ) || null;
+		sidebar.nameEl.textContent = data ? data.label : slug.replace( /-/g, ' ' );
+		sidebar.listEl.innerHTML = '';
+
+		if ( data && data.flagships && data.flagships.length ) {
+			sidebar.emptyEl.classList.add( 'hidden' );
+			data.flagships.forEach( ( f ) => {
+				const li = document.createElement( 'li' );
+				li.className = 'border-l-2 border-[#AA7040] pl-4 py-2';
+				li.innerHTML =
+					'<span class="block text-lg font-semibold text-white">' +
+					escHtml( f.title ) +
+					'</span>' +
+					( f.type ? '<span class="block text-sm text-white/60">' + escHtml( f.type ) + '</span>' : '' );
+				sidebar.listEl.appendChild( li );
+			} );
+		} else {
+			sidebar.emptyEl.classList.remove( 'hidden' );
+		}
+	}
+
+	function escHtml( str ) {
+		const d = document.createElement( 'div' );
+		d.textContent = str;
+		return d.innerHTML;
+	}
+
+	// ── Map path events ──────────────────────────────────────────
+	Object.entries( pathBySlug ).forEach( ( [ slug, path ] ) => {
+		path.addEventListener( 'mouseenter', () => {
+			if ( activeProvince !== slug ) {
+				highlightProvince( slug );
+			}
 		} );
-		buttons.forEach( ( btn ) => {
-			btn.classList.remove( 'border-[#AA7040]', 'text-white' );
-			btn.classList.add( 'border-transparent', 'text-white/60' );
+
+		path.addEventListener( 'mouseleave', () => {
+			if ( activeProvince && activeProvince !== slug ) {
+				highlightProvince( activeProvince );
+			} else if ( ! activeProvince ) {
+				highlightProvince( null );
+			}
+		} );
+
+		path.addEventListener( 'click', () => {
+			lockProvince( slug );
+		} );
+	} );
+
+	// ── Sidebar button events ────────────────────────────────────
+	buttons.forEach( ( btn ) => {
+		btn.addEventListener( 'click', () => {
+			lockProvince( btn.dataset.province );
+		} );
+	} );
+
+	// ── Activate Gauteng on page load ────────────────────────────
+	lockProvince( 'gauteng' );
+} )();
+
+/* =================================================================
+   Latest News Carousel
+   ================================================================= */
+( function () {
+	const carousel = document.querySelector( '.news-carousel' );
+	if ( ! carousel ) return;
+
+	const track = carousel.querySelector( '.news-carousel__track' );
+	const slides = carousel.querySelectorAll( '.news-carousel__slide' );
+	const prevBtn = carousel.querySelector( '.news-carousel__prev' );
+	const nextBtn = carousel.querySelector( '.news-carousel__next' );
+	const dots = carousel.querySelectorAll( '.news-carousel__dot' );
+
+	const perPage = 3;
+	const totalPages = Math.ceil( slides.length / perPage );
+	let current = 0;
+
+	function goTo( index ) {
+		if ( index < 0 ) index = totalPages - 1;
+		if ( index >= totalPages ) index = 0;
+		current = index;
+
+		const slideWidth = slides[ 0 ].offsetWidth;
+		const gap = parseFloat( getComputedStyle( track ).gap ) || 16;
+		const offset = current * perPage * ( slideWidth + gap );
+		track.style.transform = `translateX(-${ offset }px)`;
+
+		dots.forEach( ( dot, i ) => {
+			dot.classList.toggle( 'bg-[#AA7040]', i === current );
+			dot.classList.toggle( 'bg-gray-300', i !== current );
 		} );
 	}
 
-	buttons.forEach( ( btn ) => {
-		btn.addEventListener( 'mouseenter', () => {
-			activate( btn.dataset.province );
-		} );
-		btn.addEventListener( 'mouseleave', () => {
-			deactivate();
-		} );
+	prevBtn.addEventListener( 'click', () => goTo( current - 1 ) );
+	nextBtn.addEventListener( 'click', () => goTo( current + 1 ) );
+	dots.forEach( ( dot ) => {
+		dot.addEventListener( 'click', () => goTo( Number( dot.dataset.index ) ) );
 	} );
+
+	goTo( 0 );
 } )();

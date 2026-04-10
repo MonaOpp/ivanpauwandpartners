@@ -82,12 +82,13 @@ body.home #page.layout-wrapper {
    ============================================================= */
 
 .site-header {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	z-index: 100;
 	padding-top: 40px;
+	background: transparent;
 }
 
 .header-inner {

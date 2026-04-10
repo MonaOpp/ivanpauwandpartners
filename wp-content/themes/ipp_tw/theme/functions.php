@@ -239,3 +239,67 @@ function ipp_tw_enqueue_swiper() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'ipp_tw_enqueue_swiper' );
+
+/**
+ * Pass flagship data grouped by province to the front-end map script.
+ */
+function ipp_tw_localize_map_data() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$provinces = array(
+		'limpopo',
+		'gauteng',
+		'mpumalanga',
+		'north-west',
+		'free-state',
+		'kwazulu-natal',
+		'nothern-cape',
+		'western-cape',
+		'eastern-cape',
+	);
+
+	$map_data = array();
+
+	foreach ( $provinces as $slug ) {
+		$term = get_term_by( 'slug', $slug, 'flagship' );
+		$label = $term ? $term->name : ucwords( str_replace( '-', ' ', $slug ) );
+
+		$flagships = array();
+
+		if ( $term && ! is_wp_error( $term ) ) {
+			$posts = get_posts(
+				array(
+					'post_type'      => 'flagship',
+					'posts_per_page' => -1,
+					'tax_query'      => array(
+						array(
+							'taxonomy' => 'flagship',
+							'field'    => 'slug',
+							'terms'    => $slug,
+						),
+					),
+				)
+			);
+
+			foreach ( $posts as $post ) {
+				$title = get_field( 'flagship_title', $post->ID );
+				$type  = get_field( 'type_of_flagship', $post->ID );
+
+				$flagships[] = array(
+					'title' => $title ? $title : $post->post_title,
+					'type'  => $type ? $type : '',
+				);
+			}
+		}
+
+		$map_data[ $slug ] = array(
+			'label'     => $label,
+			'flagships' => $flagships,
+		);
+	}
+
+	wp_localize_script( 'ipp_tw-script', 'ippMapData', $map_data );
+}
+add_action( 'wp_enqueue_scripts', 'ipp_tw_localize_map_data' );

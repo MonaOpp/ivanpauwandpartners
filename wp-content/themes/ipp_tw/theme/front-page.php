@@ -121,5 +121,7 @@ get_header();
 
     <?php get_template_part( 'template-parts/content/content', 'sa-map' ); ?>
 
+    <?php get_template_part( 'template-parts/content/content', 'latest-news' ); ?>
+
 <?php
 get_footer();
