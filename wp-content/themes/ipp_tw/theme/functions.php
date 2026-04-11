@@ -286,10 +286,17 @@ function ipp_tw_localize_map_data() {
 			foreach ( $posts as $post ) {
 				$title = get_field( 'flagship_title', $post->ID );
 				$type  = get_field( 'type_of_flagship', $post->ID );
+				$image = get_field( 'fs_image', $post->ID );
+				$image_url = '';
+				if ( $image ) {
+					$image_url = is_array( $image ) ? $image['url'] : wp_get_attachment_url( $image );
+				}
 
 				$flagships[] = array(
-					'title' => $title ? $title : $post->post_title,
-					'type'  => $type ? $type : '',
+					'title'     => $title ? $title : $post->post_title,
+					'type'      => $type ? $type : '',
+					'image'     => $image_url ? $image_url : '',
+					'permalink' => get_permalink( $post->ID ),
 				);
 			}
 		}

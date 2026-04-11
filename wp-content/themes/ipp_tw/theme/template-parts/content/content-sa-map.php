@@ -59,7 +59,7 @@ $provinces = array(
 		<div class="flex flex-col gap-10 lg:flex-row lg:items-start">
 
 			<!-- Left: Province info sidebar -->
-			<div class="w-full lg:w-2/5" id="sa-map-sidebar">
+			<div class="w-full lg:w-1/2" id="sa-map-sidebar">
 
 				<!-- Province button list -->
 				
@@ -73,14 +73,15 @@ $provinces = array(
 				<div id="sa-map-info" class="hidden">
 					<h2 class="text-left">OUR provincial <br>success.</h2>
 					<h3 id="sa-map-province-name" class="mb-4 text-2xl font-bold text-[#0D1622] text-left"></h3>
-					<ul id="sa-map-flagship-list" class="list-none space-y-3 p-0"></ul>
+					<ul id="sa-map-flagship-list" class="list-none p-0 flex flex-wrap gap-4"></ul>
+					<div id="sa-map-flagship-btn" class="hidden" style="margin-top:16px;"></div>
 					<p id="sa-map-no-projects" class="hidden text-gray-400">No flagship projects in this province yet.</p>
 				</div>
 
 			</div>
 
 			<!-- Right: Interactive SVG map -->
-			<div class="w-full lg:w-3/5" id="sa-map-container">
+			<div class="w-full lg:w-1/2" id="sa-map-container">
 				<?php
 				$svg_path = get_template_directory() . '/images/sa-map.svg';
 				if ( file_exists( $svg_path ) ) {

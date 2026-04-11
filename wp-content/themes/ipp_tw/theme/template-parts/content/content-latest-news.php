@@ -34,29 +34,45 @@ while ( $news_query->have_posts() ) {
 }
 wp_reset_postdata();
 
-$total  = count( $posts_data );
-$pages  = ceil( $total / 3 );
+$total   = count( $posts_data );
+$visible = 3;
+$pages   = max( 1, $total - $visible + 1 );
 ?>
+
+<style>
+	.news-carousel__slide { flex: 0 0 100%; max-width: 100%; }
+	@media (min-width: 768px) { .news-carousel__slide { flex: 0 0 50%; max-width: 50%; } }
+	@media (min-width: 1024px) { .news-carousel__slide { flex: 0 0 33.333%; max-width: 33.333%; } }
+	.news-carousel__slide .slide-image { height: 220px; transition: height 0.4s ease; }
+	.news-carousel__slide.slide-active .slide-image { height: 300px; }
+	.news-carousel__track { min-height: 300px; }
+	.news-carousel__slide:not(.slide-active) .slide-title-bar { opacity: 0 !important; pointer-events: none; }
+	.news-carousel__slide:not(.slide-active) .slide-hover-overlay { display: none !important; }
+	.news-carousel__slide:not(.slide-active) .group:hover img { transform: none !important; }
+	.news-carousel__dot { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; }
+	.news-carousel__dot.dot-active { background-color: #AA7040; border: 3px solid #AA7040; }
+	.news-carousel__dot.dot-inactive { background-color: transparent; border: 1px solid #AA7040; }
+</style>
 
 <section class="w-full bg-[#F7F2F2] py-16">
 	<div class="layout-wrapper mx-auto px-6">
 
 		<!-- Heading -->
-		<h2 class="m-0 mb-10 text-5xl leading-tight tracking-wide md:text-6xl">
+		<h2 class="m-0 mb-10 text-5xl leading-tight tracking-wide md:text-6xl text-left">
 			<span class="font-extrabold uppercase text-[#3A5F82]">LATEST </span>
 			<span class="font-semibold uppercase italic text-[#3A5F82]">LEGAL NEWS &</span><br>
 			<span class="font-semibold uppercase italic text-[#AA7040]">INSIGHTS</span>
 		</h2>
 
 		<!-- Carousel wrapper -->
-		<div class="news-carousel relative" data-total="<?php echo esc_attr( $total ); ?>">
+		<div class="news-carousel relative overflow-hidden rounded-lg" data-total="<?php echo esc_attr( $total ); ?>">
 
 			<!-- Track -->
-			<div class="news-carousel__track flex transition-transform duration-500 ease-in-out" ">
-				<?php foreach ( $posts_data as $post_item ) : ?>
-					<div class="news-carousel__slide w-full flex-shrink-0 md:w-[calc(33.333%-0.67rem)]">
-						<a href="<?php echo esc_url( $post_item['permalink'] ); ?>" class="group block overflow-hidden rounded-lg no-underline">
-							<div class="relative aspect-[4/3] overflow-hidden bg-gray-200">
+			<div class="news-carousel__track flex items-start transition-transform duration-500 ease-in-out">
+				<?php foreach ( $posts_data as $idx => $post_item ) : ?>
+					<div class="news-carousel__slide <?php echo 0 === $idx ? 'slide-active' : ''; ?>" data-index="<?php echo esc_attr( $idx ); ?>">
+						<a href="<?php echo esc_url( $post_item['permalink'] ); ?>" class="group block overflow-hidden no-underline">
+							<div class="slide-image relative overflow-hidden bg-gray-200">
 								<?php if ( $post_item['thumbnail'] ) : ?>
 									<img
 										src="<?php echo esc_url( $post_item['thumbnail'] ); ?>"
@@ -66,16 +82,19 @@ $pages  = ceil( $total / 3 );
 								<?php endif; ?>
 
 								<!-- Hover overlay with excerpt -->
-								<div class="absolute inset-x-0 bottom-0 translate-y-full bg-[#132E47]/80 p-4 transition-transform duration-300 group-hover:translate-y-0">
-									<p class="m-0 text-sm leading-snug text-white">
+								<div class="slide-hover-overlay absolute inset-x-0 bottom-0 translate-y-full bg-[#3A5F82] p-4 transition-transform duration-300 group-hover:translate-y-0">
+									<h3 class="m-0 mb-1 text-sm font-semibold leading-snug text-white text-left">
+										<?php echo esc_html( $post_item['title'] ); ?>
+									</h3>
+									<p class="m-0 text-sm leading-snug text-white text-left">
 										<?php echo esc_html( $post_item['excerpt'] ); ?>
 									</p>
-									<span class="mt-2 inline-block text-sm font-semibold text-[#AA7040]">Learn More &rarr;</span>
+									<span class="mt-2 inline-block text-sm text-[#18273A] bg-white text-left px-4 py-2 rounded-lg">Learn More</span>
 								</div>
 
 								<!-- Title bar at bottom -->
-								<div class="absolute inset-x-0 bottom-0 bg-[#132E47]/70 px-4 py-3 transition-opacity duration-300 group-hover:opacity-0">
-									<h3 class="m-0 text-sm font-semibold leading-snug text-white">
+								<div class="slide-title-bar absolute inset-x-0 bottom-0 bg-[#3A5F82] px-4 py-3 transition-opacity duration-300 group-hover:opacity-0">
+									<h3 class="m-0 text-sm font-semibold leading-snug text-white text-left">
 										<?php echo esc_html( $post_item['title'] ); ?>
 									</h3>
 								</div>
@@ -85,13 +104,13 @@ $pages  = ceil( $total / 3 );
 				<?php endforeach; ?>
 			</div>
 
-			<!-- Controls: dots + arrows -->
-			<div class="mt-6 flex items-center justify-end gap-4">
+			<!-- Controls: right-aligned -->
+			<div class="flex flex-col items-end mt-4 gap-2">
 				<!-- Dots -->
 				<div class="news-carousel__dots flex items-center gap-2">
 					<?php for ( $i = 0; $i < $pages; $i++ ) : ?>
 						<button
-							class="news-carousel__dot h-3 w-3 rounded-full border-0 transition-colors duration-200 <?php echo 0 === $i ? 'bg-[#AA7040]' : 'bg-gray-300'; ?>"
+							class="news-carousel__dot <?php echo 0 === $i ? 'dot-active' : 'dot-inactive'; ?>"
 							data-index="<?php echo esc_attr( $i ); ?>"
 							aria-label="Go to slide group <?php echo esc_attr( $i + 1 ); ?>"
 						></button>
@@ -101,10 +120,10 @@ $pages  = ceil( $total / 3 );
 				<!-- Arrows -->
 				<div class="flex gap-2">
 					<button class="news-carousel__prev flex h-10 w-10 items-center justify-center rounded-full bg-[#3A5F82] text-white border-0 transition-colors hover:bg-[#2a4a66] cursor-pointer" aria-label="Previous">
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/next.png' ) ); ?>" alt="next" >
 					</button>
 					<button class="news-carousel__next flex h-10 w-10 items-center justify-center rounded-full bg-[#3A5F82] text-white border-0 transition-colors hover:bg-[#2a4a66] cursor-pointer" aria-label="Next">
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/prev.png' ) ); ?>" alt="previous" >
 					</button>
 				</div>
 			</div>

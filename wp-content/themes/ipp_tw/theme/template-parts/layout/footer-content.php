@@ -27,6 +27,8 @@ if ( is_array( $email ) ) {
 }
 ?>
 
+<?php get_template_part( 'template-parts/content/content', 'cta-banner' ); ?>
+
 <footer id="colophon" class="site-footer">
 
 	<!-- Marquee outline text -->

@@ -103,6 +103,7 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 		infoEl    : document.getElementById( 'sa-map-info' ),
 		nameEl    : document.getElementById( 'sa-map-province-name' ),
 		listEl    : document.getElementById( 'sa-map-flagship-list' ),
+		btnEl     : document.getElementById( 'sa-map-flagship-btn' ),
 		emptyEl   : document.getElementById( 'sa-map-no-projects' ),
 	};
 
@@ -171,6 +172,8 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 			activateButton( null );
 			sidebar.infoEl.classList.add( 'hidden' );
 			sidebar.defaultEl.classList.remove( 'hidden' );
+			sidebar.btnEl.classList.add( 'hidden' );
+			sidebar.btnEl.innerHTML = '';
 			return;
 		}
 
@@ -191,19 +194,26 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 		const data = ( window.ippMapData && window.ippMapData[ slug ] ) || null;
 		sidebar.nameEl.textContent = data ? data.label : slug.replace( /-/g, ' ' );
 		sidebar.listEl.innerHTML = '';
+		sidebar.btnEl.innerHTML = '';
+		sidebar.btnEl.classList.add( 'hidden' );
 
 		if ( data && data.flagships && data.flagships.length ) {
 			sidebar.emptyEl.classList.add( 'hidden' );
-			data.flagships.forEach( ( f ) => {
+			const items = data.flagships.slice( 0, 5 );
+			items.forEach( ( f ) => {
 				const li = document.createElement( 'li' );
-				li.className = 'border-l-2 border-[#AA7040] pl-4 py-2';
-				li.innerHTML =
-					'<span class="block text-lg font-semibold text-white">' +
-					escHtml( f.title ) +
-					'</span>' +
-					( f.type ? '<span class="block text-sm text-white/60">' + escHtml( f.type ) + '</span>' : '' );
+				li.className = 'inline-block';
+				let html = '';
+				if ( f.image ) {
+					html += '<img src="' + escHtml( f.image ) + '" alt="' + escHtml( f.title ) + '" style="width:120px;height:130px;border-radius:8px;object-fit:cover;display:block;" />';
+				}
+				li.innerHTML = html;
 				sidebar.listEl.appendChild( li );
 			} );
+			// Single button below all images
+			const firstLink = items[ 0 ].permalink || '#';
+			sidebar.btnEl.innerHTML = '<a href="' + escHtml( firstLink ) + '" style="display:inline-block;padding:20px;border-radius:10px;background-color:#AA7040;color:#fff;text-decoration:none;font-size:14px;font-weight:600;">Get More Details</a>';
+			sidebar.btnEl.classList.remove( 'hidden' );
 		} else {
 			sidebar.emptyEl.classList.remove( 'hidden' );
 		}
@@ -259,24 +269,41 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 	const prevBtn = carousel.querySelector( '.news-carousel__prev' );
 	const nextBtn = carousel.querySelector( '.news-carousel__next' );
 	const dots = carousel.querySelectorAll( '.news-carousel__dot' );
+	const total = slides.length;
 
-	const perPage = 3;
-	const totalPages = Math.ceil( slides.length / perPage );
+	function getVisible() {
+		if ( window.innerWidth >= 1024 ) return 3;
+		if ( window.innerWidth >= 768 ) return 2;
+		return 1;
+	}
+
 	let current = 0;
 
 	function goTo( index ) {
-		if ( index < 0 ) index = totalPages - 1;
-		if ( index >= totalPages ) index = 0;
+		const visible = getVisible();
+		const maxIndex = Math.max( 0, total - visible );
+		// Loop: wrap around
+		if ( index < 0 ) index = maxIndex;
+		if ( index > maxIndex ) index = 0;
 		current = index;
 
 		const slideWidth = slides[ 0 ].offsetWidth;
-		const gap = parseFloat( getComputedStyle( track ).gap ) || 16;
-		const offset = current * perPage * ( slideWidth + gap );
+		const gap = parseFloat( getComputedStyle( track ).gap ) || 0;
+		const offset = current * ( slideWidth + gap );
 		track.style.transform = `translateX(-${ offset }px)`;
 
+		slides.forEach( ( slide, i ) => {
+			slide.classList.toggle( 'slide-active', i === current );
+		} );
+
 		dots.forEach( ( dot, i ) => {
-			dot.classList.toggle( 'bg-[#AA7040]', i === current );
-			dot.classList.toggle( 'bg-gray-300', i !== current );
+			if ( i === current ) {
+				dot.classList.add( 'dot-active' );
+				dot.classList.remove( 'dot-inactive' );
+			} else {
+				dot.classList.remove( 'dot-active' );
+				dot.classList.add( 'dot-inactive' );
+			}
 		} );
 	}
 
