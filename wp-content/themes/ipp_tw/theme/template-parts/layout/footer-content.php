@@ -29,17 +29,16 @@ if ( is_array( $email ) ) {
 
 <?php get_template_part( 'template-parts/content/content', 'cta-banner' ); ?>
 
-<footer id="colophon" class="site-footer">
-
-	<!-- Marquee outline text -->
-	<div class="footer-marquee">
-		<div class="footer-marquee-track">
-			<span>Experience. Quality. Solutions.</span>
-			<span>Experience. Quality. Solutions.</span>
-			<span>Experience. Quality. Solutions.</span>
-			<span>Experience. Quality. Solutions.</span>
-		</div>
+<div class="footer-marquee">
+	<div class="footer-marquee-track">
+		<span>Experience. Quality. Solutions.</span>
+		<span>Experience. Quality. Solutions.</span>
+		<span>Experience. Quality. Solutions.</span>
+		<span>Experience. Quality. Solutions.</span>
 	</div>
+</div>
+
+<footer id="colophon" class="site-footer">
 
 	<div class="layout-wrapper">
 

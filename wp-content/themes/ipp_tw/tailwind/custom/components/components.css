@@ -525,14 +525,12 @@ body.home #page.layout-wrapper {
 
 /* Footer marquee outline text */
 .footer-marquee {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	transform: translateY(-50%);
+	position: relative;
+	z-index: 10;
+	margin-top: -60px;
+	margin-bottom: -60px;
 	overflow: hidden;
 	pointer-events: none;
-	z-index: 1;
 }
 
 .footer-marquee-track {
