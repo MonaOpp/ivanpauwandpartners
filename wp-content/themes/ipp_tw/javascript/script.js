@@ -315,3 +315,209 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 
 	goTo( 0 );
 } )();
+
+// ── Team Timeline Swiper ────────────────────────────────────
+( function () {
+	const container = document.querySelector( '.team-timeline-swiper' );
+	if ( ! container || typeof Swiper === 'undefined' ) {
+		return;
+	}
+
+	const prevBtn    = document.querySelector( '.team-timeline__prev' );
+	const nextBtn    = document.querySelector( '.team-timeline__next' );
+	const counterEl  = document.querySelector( '.team-timeline__current' );
+
+	// eslint-disable-next-line no-undef
+	const swiper = new Swiper( '.team-timeline-swiper', {
+		slidesPerView: 1,
+		spaceBetween: 30,
+		allowTouchMove: true,
+		navigation: {
+			prevEl: '.team-timeline__prev',
+			nextEl: '.team-timeline__next',
+		},
+		on: {
+			slideChange: function () {
+				const idx = this.activeIndex;
+
+				// Update counter
+				if ( counterEl ) {
+					counterEl.textContent = idx + 1;
+				}
+
+				// Activate first dot of current slide
+				document.querySelectorAll( '.team-timeline__dot' ).forEach( ( dot ) => {
+					dot.classList.remove( 'team-timeline__dot--active' );
+				} );
+				const activeDot = container.querySelector(
+					'.swiper-slide-active .team-timeline__dot[data-index="0"]'
+				);
+				if ( activeDot ) {
+					activeDot.classList.add( 'team-timeline__dot--active' );
+				}
+			},
+			init: function () {
+				// Activate first dot on init
+				const firstDot = container.querySelector(
+					'.swiper-slide-active .team-timeline__dot[data-index="0"]'
+				);
+				if ( firstDot ) {
+					firstDot.classList.add( 'team-timeline__dot--active' );
+				}
+			},
+		},
+	} );
+} )();
+
+// ── Team Grid Carousel + Bio Popup ──────────────────────────
+( function () {
+	const gridContainer = document.querySelector( '.team-grid-swiper' );
+	if ( ! gridContainer || typeof Swiper === 'undefined' ) {
+		return;
+	}
+
+	const counterEl = document.querySelector( '.team-grid__current' );
+
+	// eslint-disable-next-line no-undef
+	const teamGridSwiper = new Swiper( '.team-grid-swiper', {
+		slidesPerView: 2,
+		slidesPerGroup: 2,
+		spaceBetween: 16,
+		navigation: {
+			prevEl: '.team-grid__prev',
+			nextEl: '.team-grid__next',
+		},
+		breakpoints: {
+			768: {
+				slidesPerView: 3,
+				slidesPerGroup: 3,
+				spaceBetween: 20,
+			},
+			1024: {
+				slidesPerView: 4,
+				slidesPerGroup: 4,
+				spaceBetween: 24,
+			},
+		},
+		on: {
+			slideChange: function () {
+				if ( counterEl ) {
+					const perGroup = this.params.slidesPerGroup;
+					const page = Math.floor( this.activeIndex / perGroup ) + 1;
+					counterEl.textContent = page;
+				}
+			},
+		},
+	} );
+
+	// ── Bio Popup ──────────────────────────────────────────
+	const popup     = document.getElementById( 'team-popup' );
+	const popupImg  = document.getElementById( 'team-popup-image' );
+	const popupName = document.getElementById( 'team-popup-name' );
+	const popupTitle = document.getElementById( 'team-popup-title' );
+	const popupDesc = document.getElementById( 'team-popup-desc' );
+
+	if ( ! popup ) {
+		return;
+	}
+
+	function openPopup( btn ) {
+		popupImg.src         = btn.dataset.image || '';
+		popupImg.alt         = btn.dataset.name || '';
+		popupName.textContent = btn.dataset.name || '';
+		popupTitle.textContent = btn.dataset.title || '';
+		popupDesc.innerHTML   = btn.dataset.desc || '';
+		popup.classList.add( 'is-open' );
+		popup.setAttribute( 'aria-hidden', 'false' );
+		document.body.style.overflow = 'hidden';
+	}
+
+	function closePopup() {
+		popup.classList.remove( 'is-open' );
+		popup.setAttribute( 'aria-hidden', 'true' );
+		document.body.style.overflow = '';
+	}
+
+	// Delegate click on bio buttons
+	document.addEventListener( 'click', function ( e ) {
+		const bioBtn = e.target.closest( '.team-card__bio-btn' );
+		if ( bioBtn ) {
+			e.preventDefault();
+			openPopup( bioBtn );
+			return;
+		}
+
+		if ( e.target.closest( '.team-popup__close' ) || e.target.closest( '.team-popup__backdrop' ) ) {
+			closePopup();
+		}
+	} );
+
+	// Close on Escape
+	document.addEventListener( 'keydown', function ( e ) {
+		if ( e.key === 'Escape' && popup.classList.contains( 'is-open' ) ) {
+			closePopup();
+		}
+	} );
+} )();
+
+// ── Flagship Projects Tab Filtering ─────────────────────────
+( function () {
+	const tabs  = document.querySelectorAll( '.flagship-tab' );
+	const cards = document.querySelectorAll( '.flagship-card' );
+
+	if ( ! tabs.length || ! cards.length ) {
+		return;
+	}
+
+	tabs.forEach( function ( tab ) {
+		tab.addEventListener( 'click', function () {
+			const term = this.dataset.term;
+
+			// Update active tab
+			tabs.forEach( function ( t ) {
+				t.classList.remove( 'flagship-tab--active' );
+			} );
+			this.classList.add( 'flagship-tab--active' );
+
+			// Filter cards
+			cards.forEach( function ( card ) {
+				if ( term === 'all' ) {
+					card.classList.remove( 'is-hidden' );
+				} else {
+					const cardTerms = card.dataset.terms ? card.dataset.terms.split( ' ' ) : [];
+					if ( cardTerms.indexOf( term ) !== -1 ) {
+						card.classList.remove( 'is-hidden' );
+					} else {
+						card.classList.add( 'is-hidden' );
+					}
+				}
+			} );
+		} );
+	} );
+} )();
+
+/* =========================================================
+   Practice Area Tabs – active state + smooth scroll
+   ========================================================= */
+( function () {
+	var tabBtns = document.querySelectorAll( '.pa-tab-btn' );
+	if ( ! tabBtns.length ) return;
+
+	tabBtns.forEach( function ( btn ) {
+		btn.addEventListener( 'click', function ( e ) {
+			e.preventDefault();
+
+			// Toggle active class
+			tabBtns.forEach( function ( b ) {
+				b.classList.remove( 'pa-tab-btn--active' );
+			} );
+			this.classList.add( 'pa-tab-btn--active' );
+
+			// Smooth-scroll to target section
+			var target = document.querySelector( this.getAttribute( 'href' ) );
+			if ( target ) {
+				target.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+			}
+		} );
+	} );
+} )();

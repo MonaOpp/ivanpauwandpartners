@@ -229,9 +229,16 @@ require get_template_directory() . '/inc/acf-fields.php';
  * Enqueue Swiper.js on the front page.
  */
 function ipp_tw_enqueue_swiper() {
-	if ( is_front_page() ) {
+	if ( is_front_page() || is_page( 'about-us' ) ) {
 		wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11' );
 		wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11', true );
+
+		// Make theme script depend on Swiper so it loads after.
+		global $wp_scripts;
+		if ( isset( $wp_scripts->registered['ipp_tw-script'] ) ) {
+			$wp_scripts->registered['ipp_tw-script']->deps[] = 'swiper';
+		}
+
 		wp_add_inline_script(
 			'swiper',
 			'document.addEventListener("DOMContentLoaded",function(){new Swiper(".home-swiper",{loop:true,autoplay:{delay:5000,disableOnInteraction:false},effect:"fade",fadeEffect:{crossFade:true},navigation:{prevEl:".slider-prev",nextEl:".slider-next"}})});'
@@ -244,7 +251,7 @@ add_action( 'wp_enqueue_scripts', 'ipp_tw_enqueue_swiper' );
  * Pass flagship data grouped by province to the front-end map script.
  */
 function ipp_tw_localize_map_data() {
-	if ( ! is_front_page() ) {
+	if ( ! is_front_page() && ! is_page( 'about-us' ) ) {
 		return;
 	}
 
@@ -310,3 +317,17 @@ function ipp_tw_localize_map_data() {
 	wp_localize_script( 'ipp_tw-script', 'ippMapData', $map_data );
 }
 add_action( 'wp_enqueue_scripts', 'ipp_tw_localize_map_data' );
+
+/**
+ * Change the practice-area-category taxonomy rewrite slug to "practice-area".
+ */
+function ipp_tw_change_practice_area_category_slug( $args, $taxonomy ) {
+	if ( 'practice-area-category' === $taxonomy ) {
+		$args['rewrite'] = array(
+			'slug'       => 'practice-area',
+			'with_front' => false,
+		);
+	}
+	return $args;
+}
+add_filter( 'register_taxonomy_args', 'ipp_tw_change_practice_area_category_slug', 10, 2 );

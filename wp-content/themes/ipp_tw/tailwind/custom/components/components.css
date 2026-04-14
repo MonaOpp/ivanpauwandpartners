@@ -488,6 +488,12 @@ body.home #page.layout-wrapper {
 
 /* CTA Banner above footer */
 .cta-banner {
+	width: 100vw;
+	position: relative;
+	left: 50%;
+	right: 50%;
+	margin-left: -50vw;
+	margin-right: -50vw;
 	padding: 60px 0 100px;
 	text-align: center;
 }
@@ -523,9 +529,343 @@ body.home #page.layout-wrapper {
 	opacity: 0.9;
 }
 
+/* =============================================================
+   Team Timeline Carousel
+   ============================================================= */
+
+.team-timeline__heading {
+	font-size: 64px;
+	line-height: 1;
+	margin: 0;
+}
+
+.team-timeline__row {
+	display: grid;
+	gap: 16px;
+}
+
+.team-timeline__track {
+	position: relative;
+	padding: 14px 0;
+}
+
+.team-timeline__line {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background-color: #C7976E;
+	transform: translateY(-50%);
+}
+
+.team-timeline__dot {
+	position: relative;
+	z-index: 1;
+	display: block;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	border: 2px solid #C7976E;
+	background-color: #fff;
+	transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.team-timeline__dot--active {
+	background-color: #AA7040;
+	border-color: #AA7040;
+}
+
+.team-timeline-swiper {
+	overflow: hidden;
+}
+
+/* =============================================================
+   Team Grid Carousel + Bio Popup
+   ============================================================= */
+
+.team-grid-swiper {
+	overflow: hidden;
+}
+
+.team-card {
+	background: #fff;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.team-card__image-wrap {
+	position: relative;
+	overflow: hidden;
+	aspect-ratio: 3 / 4;
+}
+
+.team-card__image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.team-card__overlay {
+	position: absolute;
+	inset: 0;
+	background-color: rgba(24, 39, 58, 0.85);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.team-card:hover .team-card__overlay {
+	opacity: 1;
+}
+
+.team-card__bio-btn {
+	display: inline-block;
+	padding: 10px 28px;
+	border: 2px solid #fff;
+	border-radius: 6px;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	background: none;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.team-card__bio-btn:hover {
+	background-color: rgba(255, 255, 255, 0.15);
+}
+
+.team-card__info {
+	padding: 12px 8px;
+	text-align: center;
+}
+
+.team-card__name {
+	font-size: 14px;
+	font-weight: 700;
+	color: #132E47;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.team-card__title {
+	font-size: 12px;
+	color: #6B7280;
+	margin: 4px 0 0;
+}
+
+/* ── Bio Popup ──────────────────────────────────────────────── */
+
+.team-popup {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.team-popup.is-open {
+	opacity: 1;
+	visibility: visible;
+}
+
+.team-popup__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.team-popup__dialog {
+	position: relative;
+	z-index: 1;
+	background: #fff;
+	border-radius: 12px;
+	width: 90vw;
+	max-width: 860px;
+	height: 520px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.team-popup__close {
+	position: absolute;
+	top: 12px;
+	right: 16px;
+	z-index: 2;
+	background: none;
+	border: none;
+	font-size: 28px;
+	color: #6B7280;
+	cursor: pointer;
+	line-height: 1;
+}
+
+.team-popup__close:hover {
+	color: #132E47;
+}
+
+.team-popup__inner {
+	display: flex;
+	height: 100%;
+}
+
+.team-popup__image-col {
+	width: 40%;
+	flex-shrink: 0;
+	background: #F3F4F6;
+}
+
+.team-popup__image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.team-popup__info-col {
+	width: 60%;
+	padding: 32px;
+	overflow-y: auto;
+	border-left: 4px solid #3A5F82;
+}
+
+.team-popup__name {
+	font-size: 22px;
+	font-weight: 700;
+	color: #132E47;
+	margin: 0;
+}
+
+.team-popup__job-title {
+	font-size: 14px;
+	font-weight: 600;
+	color: #6B7280;
+	margin: 4px 0 16px;
+}
+
+.team-popup__desc {
+	font-size: 14px;
+	line-height: 1.7;
+	color: #374151;
+}
+
+@media (max-width: 767px) {
+	.team-popup__dialog {
+		height: 90vh;
+		max-width: 95vw;
+	}
+
+	.team-popup__inner {
+		flex-direction: column;
+	}
+
+	.team-popup__image-col {
+		width: 100%;
+		height: 200px;
+	}
+
+	.team-popup__info-col {
+		width: 100%;
+		padding: 20px;
+		border-left: none;
+		border-top: 4px solid #3A5F82;
+	}
+}
+
+/* =============================================================
+   Flagship Projects Page
+   ============================================================= */
+
+.flagship-tab {
+	display: block;
+	width: 100%;
+	text-align: left;
+	padding: 8px 0;
+	background: none;
+	border: none;
+	font-size: 15px;
+	color: #6B7280;
+	cursor: pointer;
+	transition: color 0.2s ease;
+	font-weight: 400;
+}
+
+.flagship-tab:hover {
+	color: #132E47;
+}
+
+.flagship-tab--active {
+	color: #132E47;
+	font-weight: 700;
+}
+
+.flagship-card {
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.flagship-card__image-wrap {
+	position: relative;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	border-radius: 8px;
+}
+
+.flagship-card__image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.flagship-card__overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgba(19, 46, 71, 0.85) 0%, rgba(19, 46, 71, 0.3) 50%, transparent 100%);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding: 16px;
+}
+
+.flagship-card__title {
+	font-size: 16px;
+	font-weight: 700;
+	color: #fff;
+	margin: 0;
+	line-height: 1.3;
+}
+
+.flagship-card__type {
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.8);
+	margin: 4px 0 0;
+}
+
+.flagship-card.is-hidden {
+	display: none;
+}
+
 /* Footer marquee outline text */
 .footer-marquee {
+	width: 100vw;
 	position: relative;
+	left: 50%;
+	right: 50%;
+	margin-left: -50vw;
+	margin-right: -50vw;
 	z-index: 10;
 	margin-top: -60px;
 	margin-bottom: -60px;
@@ -617,6 +957,115 @@ body.home #page.layout-wrapper {
 	gap: 1rem;
 }
 
+/* ============================================
+   Practice Area Taxonomy Page
+   ============================================ */
+
+/* Tab buttons */
+.pa-tab-btn {
+	display: inline-block;
+	padding: 0.5rem 1.25rem;
+	border: 1px solid #D1D5DB;
+	border-radius: 9999px;
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: #374151;
+	background: #fff;
+	text-decoration: none;
+	transition: all 0.2s ease;
+	white-space: nowrap;
+}
+
+.pa-tab-btn:hover {
+	background: #f3f4f6;
+	border-color: #9ca3af;
+	color: #111827;
+}
+
+.pa-tab-btn--active {
+	background: #AA7040;
+	border-color: #AA7040;
+	color: #fff;
+}
+
+.pa-tab-btn--active:hover {
+	background: #96623a;
+	border-color: #96623a;
+	color: #fff;
+}
+
+/* Practice area section */
+.pa-section {
+	padding: 2.5rem 0;
+	scroll-margin-top: 2rem;
+}
+
+/* Info row title / desc – allow color override via utility classes */
+.pa-info-row__title {
+	color: inherit;
+}
+
+.pa-info-row__desc {
+	color: inherit;
+}
+
+/* Right column with scrollable repeater */
+.pa-section__right {
+	max-height: 340px;
+	overflow-y: auto;
+	padding-right: 0.5rem;
+}
+
+/* Custom scrollbar for right column */
+.pa-section__right::-webkit-scrollbar {
+	width: 4px;
+}
+
+.pa-section__right::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 4px;
+}
+
+.pa-section__right::-webkit-scrollbar-thumb {
+	background: #AA7040;
+	border-radius: 4px;
+}
+
+/* Info rows (numbered items) */
+.pa-info-row {
+	display: flex;
+	gap: 0.75rem;
+	padding: 1rem 0;
+	border-bottom: 1px solid #E5E7EB;
+}
+
+.pa-info-row:last-child {
+	border-bottom: none;
+}
+
+.pa-info-row__number {
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: #AA7040;
+	flex-shrink: 0;
+	min-width: 2rem;
+	padding-top: 0.1rem;
+}
+
+.pa-info-row__title {
+	font-size: 0.9rem;
+	font-weight: 700;
+	color: #18273A;
+	margin: 0 0 0.25rem;
+}
+
+.pa-info-row__desc {
+	font-size: 0.8rem;
+	line-height: 1.6;
+	color: #6B7280;
+	margin: 0;
+}
+
 .footer-copyright {
 	font-size: 0.75rem;
 	margin: 0;
@@ -649,5 +1098,203 @@ body.home #page.layout-wrapper {
 	display: block;
 	image-rendering: -webkit-optimize-contrast;
 	image-rendering: crisp-edges;
+}
+
+/* ============================================
+   Insight (Blog) Page
+   ============================================ */
+
+/* Search input */
+.insight-search-input {
+	width: 100%;
+	padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 4px;
+	background: transparent;
+	color: #fff;
+	font-size: 0.85rem;
+}
+
+.insight-search-input::placeholder {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.insight-search-input:focus {
+	outline: none;
+	border-color: #AA7040;
+}
+
+.insight-search-icon {
+	position: absolute;
+	left: 0.6rem;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 1rem;
+	height: 1rem;
+	color: rgba(255, 255, 255, 0.5);
+	pointer-events: none;
+}
+
+/* Category nav */
+.insight-cat-nav {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.insight-cat-link {
+	display: block;
+	padding: 0.6rem 0;
+	color: rgba(255, 255, 255, 0.7);
+	text-decoration: none;
+	font-size: 0.85rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	transition: color 0.2s;
+}
+
+.insight-cat-link:first-child {
+	font-weight: 700;
+	color: #fff;
+	font-size: 0.9rem;
+}
+
+.insight-cat-link:hover,
+.insight-cat-link--active {
+	color: #AA7040;
+}
+
+.insight-cat-link--clear {
+	color: #AA7040;
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+	border-bottom: none;
+}
+
+/* Post card */
+.insight-card {
+	border-radius: 6px;
+	overflow: hidden;
+	background: #1e3550;
+	display: flex;
+	flex-direction: column;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.insight-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.insight-card__image {
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	background: #2a4a6b;
+}
+
+.insight-card__image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.insight-card__placeholder {
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg, #2a4a6b 0%, #1e3550 100%);
+}
+
+.insight-card__body {
+	padding: 1.25rem;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.insight-card__title {
+	font-size: 0.9rem;
+	font-weight: 700;
+	color: #fff;
+	margin: 0 0 0.5rem;
+	line-height: 1.4;
+}
+
+.insight-card__excerpt {
+	font-size: 0.78rem;
+	color: rgba(255, 255, 255, 0.65);
+	margin: 0 0 1rem;
+	line-height: 1.6;
+	flex: 1;
+}
+
+.insight-card__btn {
+	display: inline-block;
+	padding: 0.4rem 1.25rem;
+	background: #AA7040;
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 600;
+	border-radius: 4px;
+	text-decoration: none;
+	align-self: flex-start;
+	transition: background 0.2s;
+}
+
+.insight-card__btn:hover {
+	background: #96623a;
+}
+
+/* Pagination */
+.insight-pagination ul {
+	display: flex;
+	gap: 0.25rem;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	justify-content: flex-end;
+}
+
+.insight-pagination li a,
+.insight-pagination li span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2rem;
+	height: 2rem;
+	padding: 0 0.5rem;
+	font-size: 0.85rem;
+	border-radius: 4px;
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.7);
+	transition: background 0.2s, color 0.2s;
+}
+
+.insight-pagination li a:hover {
+	background: rgba(255, 255, 255, 0.1);
+	color: #fff;
+}
+
+.insight-pagination li .current {
+	background: #AA7040;
+	color: #fff;
+	font-weight: 700;
+}
+
+/* Load More */
+.insight-load-more-btn {
+	display: inline-block;
+	padding: 0.6rem 2rem;
+	background: #AA7040;
+	color: #fff;
+	font-size: 0.85rem;
+	font-weight: 600;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.insight-load-more-btn:hover {
+	background: #96623a;
 }
 
