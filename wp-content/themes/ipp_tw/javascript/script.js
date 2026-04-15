@@ -211,8 +211,7 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 				sidebar.listEl.appendChild( li );
 			} );
 			// Single button below all images
-			const firstLink = items[ 0 ].permalink || '#';
-			sidebar.btnEl.innerHTML = '<a href="' + escHtml( firstLink ) + '" style="display:inline-block;padding:20px;border-radius:10px;background-color:#AA7040;color:#fff;text-decoration:none;font-size:14px;font-weight:600;">Get More Details</a>';
+			sidebar.btnEl.innerHTML = '<a href="' + escHtml( window.ippFlagshipUrl || '/flagship-projects/' ) + '" style="display:inline-block;padding:20px;border-radius:10px;background-color:#AA7040;color:#fff;text-decoration:none;font-size:14px;font-weight:600;">View Projects</a>';
 			sidebar.btnEl.classList.remove( 'hidden' );
 		} else {
 			sidebar.emptyEl.classList.remove( 'hidden' );

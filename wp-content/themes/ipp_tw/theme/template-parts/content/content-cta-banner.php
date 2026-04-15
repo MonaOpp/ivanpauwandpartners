@@ -28,7 +28,9 @@ if ( ! $contact_page ) {
 	<div class="layout-wrapper mx-auto px-6">
 		<div class="cta-banner__inner">
 			<div class="cta-banner__text"><?php echo wp_kses_post( $cta_text ); ?></div>
-			<a href="<?php echo esc_url( $contact_page ); ?>" class="cta-banner__btn">Contact Us</a>
+			<?php if ( ! is_page( 'contact-us' ) ) : ?>
+				<a href="<?php echo esc_url( $contact_page ); ?>" class="cta-banner__btn">Contact Us</a>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>

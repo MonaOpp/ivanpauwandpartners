@@ -8,6 +8,20 @@
  *  — from https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes
  */
 
+p {
+	font-size: 15px;
+}
+h4 {
+	font-family: DM Sans;
+font-weight: 600;
+font-style: SemiBold;
+font-size: 36px;
+leading-trim: CAP_HEIGHT;
+line-height: 100%;
+letter-spacing: 0%;
+text-transform: uppercase;
+color:#3A5F82;
+}
 /**
  * Front page – remove layout-wrapper constraints from #page so sections
  * can be full-width. Header/footer have their own layout-wrapper.
@@ -225,7 +239,7 @@ body.home #page.layout-wrapper {
 	background: none;
 	border: none;
 	cursor: pointer;
-	color: white;
+	color: #0D1622;
 	padding: 0.3rem;
 	display: flex;
 	align-items: center;
@@ -251,12 +265,15 @@ body.home #page.layout-wrapper {
 
 #flyout-menu .sub-menu a {
 	display: block;
-	padding: 0.5rem 0;
-	color: rgba(255, 255, 255, 0.85);
+	padding: 1rem 0;
+	color: #0D1622;
 	text-decoration: none;
-	font-size: 0.75rem;
-	letter-spacing: 0.1em;
+	font-size: 20px;
+	font-family: DM Sans;
+	font-weight: 800;
+	letter-spacing: 0.12em;
 	text-transform: uppercase;
+	text-align: center;
 	transition: opacity 0.2s;
 }
 
@@ -299,13 +316,14 @@ body.home #page.layout-wrapper {
 	right: 50%;
 	margin-left: -50vw;
 	margin-right: -50vw;
-	min-height: 480px;
+	min-height: 600px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
+	padding: 120px 0;
 }
 
 .page-banner--no-image {
@@ -416,22 +434,25 @@ body.home #page.layout-wrapper {
 
 .home-slide {
 	position: relative;
-	min-height: 600px;
+	min-height: 750px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
+	padding: 120px 0;
 }
 
 @media (max-width: 767px) {
 	.home-slide {
-		min-height: 400px;
+		min-height: 500px;
+		padding: 80px 0;
 	}
 
 	.page-banner {
-		min-height: 320px;
+		min-height: 420px;
+		padding: 80px 0;
 	}
 }
 
@@ -452,6 +473,13 @@ body.home #page.layout-wrapper {
 .home-slide__content h1,
 .home-slide__content h2 {
 	text-align: left;
+}
+
+.home-slide__content h1 em,
+.home-slide__content h1 i,
+.home-slide__content h2 em,
+.home-slide__content h2 i {
+	font-style: italic;
 }
 
 .home-slide__content h2 {
@@ -494,7 +522,7 @@ body.home #page.layout-wrapper {
 	right: 50%;
 	margin-left: -50vw;
 	margin-right: -50vw;
-	padding: 60px 0 100px;
+	padding: 120px 0 140px;
 	text-align: center;
 }
 
@@ -517,7 +545,7 @@ body.single-post .cta-banner__inner {
 
 .cta-banner__text {
 	color: #fff;
-	font-size: 32px;
+	font-size: 70px;
 	font-weight: 700;
 	line-height: 1.3;
 	margin: 0;
@@ -537,6 +565,13 @@ body.single-post .cta-banner__inner {
 
 .cta-banner__btn:hover {
 	opacity: 0.9;
+}
+
+@media (max-width: 767px) {
+	.cta-banner__text,
+	.cta-banner__text h3 {
+		font-size: 40px;
+	}
 }
 
 /* =============================================================
@@ -850,10 +885,9 @@ body.single-post .cta-banner__inner {
 	padding: 16px;
 }
 
-.flagship-card__title {
-	font-size: 16px;
-	font-weight: 700;
-	color: #fff;
+h3.flagship-card__title {
+	font-size: 20px;
+	color: #000000;
 	margin: 0;
 	line-height: 1.3;
 }
@@ -891,7 +925,7 @@ body.single-post .cta-banner__inner {
 }
 
 .footer-marquee-track span {
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Poppins', sans-serif;
 	font-weight: 900;
 	font-size: 118.6px;
 	text-transform: uppercase;
@@ -1572,6 +1606,7 @@ h4.insight-card__title {
 	color: #3A5F82;
 	text-transform: uppercase;
 	margin: 0 0 1rem;
+	text-align: left;
 }
 
 .contact-info__desc {
@@ -1663,12 +1698,13 @@ h4.insight-card__title {
 	padding-top: 1.5rem;;
 }
 
-.contact-pa-card__title {
-	font-size: 0.95rem;
+h3.contact-pa-card__title {
+	font-size: 20px;
 	font-weight: 700;
 	color: #18273A;
 	text-transform: uppercase;
 	margin: 0 0 0.5rem;
+	text-align: left;
 }
 
 .contact-pa-card__title a {
@@ -1691,5 +1727,22 @@ h4.insight-card__title {
 	.contact-pa-grid {
 		grid-template-columns: 1fr;
 	}
+
+	.contact-info__heading {
+		font-size: 40px;
+	}
+
+	h3.contact-pa-card__title {
+		font-size: 20px;
+	}
 }
 
+input#gform_submit_button_1 {
+    background-color: #AA7040;
+}
+
+@media (max-width: 767px) {
+	#sa-map-info h2 {
+		font-size: 28px;
+	}
+}

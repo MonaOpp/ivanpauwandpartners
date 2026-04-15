@@ -315,6 +315,12 @@ function ipp_tw_localize_map_data() {
 	}
 
 	wp_localize_script( 'ipp_tw-script', 'ippMapData', $map_data );
+
+	$flagship_page = get_permalink( get_page_by_path( 'flagship-projects' ) );
+	if ( ! $flagship_page ) {
+		$flagship_page = home_url( '/flagship-projects/' );
+	}
+	wp_add_inline_script( 'ipp_tw-script', 'window.ippFlagshipUrl = ' . wp_json_encode( $flagship_page ) . ';', 'before' );
 }
 add_action( 'wp_enqueue_scripts', 'ipp_tw_localize_map_data' );
 

@@ -57,8 +57,14 @@ if ( is_array( $email ) ) {
 					<div class="home-slide" style="background-image: url('<?php echo esc_url( $image_url ); ?>');">
 						<div class="home-slide__overlay"></div>
 						<?php if ( $text ) : ?>
+							<?php
+							// Strip <p> tags from WYSIWYG, convert closing </p> to <br>, then clean up.
+							$clean_text = str_replace( array( '</p><p>', '</p>' . "\n" . '<p>', '</p>' ), '<br>', $text );
+							$clean_text = str_replace( '<p>', '', $clean_text );
+							$clean_text = preg_replace( '/<br\s*\/?>$/', '', trim( $clean_text ) ); // Remove trailing <br>.
+							?>
 							<div class="home-slide__content layout-wrapper">
-								<<?php echo $heading_tag; ?>><?php echo esc_html( $text ); ?></<?php echo $heading_tag; ?>>
+								<<?php echo $heading_tag; ?>><?php echo wp_kses( $clean_text, array( 'span' => array( 'style' => true, 'class' => true ), 'em' => array( 'style' => true ), 'i' => array( 'style' => true ), 'strong' => array( 'style' => true ), 'b' => array( 'style' => true ), 'br' => array() ) ); ?></<?php echo $heading_tag; ?>>
 							</div>
 						<?php endif; ?>
 					</div>

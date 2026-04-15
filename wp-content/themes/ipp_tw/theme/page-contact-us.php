@@ -50,7 +50,6 @@ $pa_categories = get_terms(
 
 				<!-- Left: Get in Touch + Practice Areas -->
 				<div class="contact-info">
-					<h2 class="contact-info__heading"><?php echo esc_html( $heading ); ?></h2>
 
 					<?php if ( $description ) : ?>
 						<div class="contact-info__desc">
@@ -78,9 +77,7 @@ $pa_categories = get_terms(
 							<?php foreach ( $pa_categories as $pa_cat ) : ?>
 								<div class="contact-pa-card">
 									<h3 class="contact-pa-card__title">
-										<a href="<?php echo esc_url( get_term_link( $pa_cat ) ); ?>">
 											<?php echo esc_html( $pa_cat->name ); ?>
-										</a>
 									</h3>
 									<?php if ( $pa_cat->description ) : ?>
 										<p class="contact-pa-card__desc">
