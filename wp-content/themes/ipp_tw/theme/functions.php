@@ -331,3 +331,45 @@ function ipp_tw_change_practice_area_category_slug( $args, $taxonomy ) {
 	return $args;
 }
 add_filter( 'register_taxonomy_args', 'ipp_tw_change_practice_area_category_slug', 10, 2 );
+
+/**
+ * Register the "Download" custom post type and "Download Category" taxonomy.
+ */
+function ipp_tw_register_download_cpt() {
+	register_post_type(
+		'download',
+		array(
+			'labels'       => array(
+				'name'          => 'Downloads',
+				'singular_name' => 'Download',
+				'add_new_item'  => 'Add New Download',
+				'edit_item'     => 'Edit Download',
+				'all_items'     => 'All Downloads',
+				'search_items'  => 'Search Downloads',
+			),
+			'public'       => true,
+			'has_archive'  => false,
+			'show_in_rest' => true,
+			'menu_icon'    => 'dashicons-download',
+			'supports'     => array( 'title', 'thumbnail' ),
+			'rewrite'      => array( 'slug' => 'download', 'with_front' => false ),
+		)
+	);
+
+	register_taxonomy(
+		'download_category',
+		'download',
+		array(
+			'labels'            => array(
+				'name'          => 'Download Categories',
+				'singular_name' => 'Download Category',
+			),
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_in_rest'      => true,
+			'show_admin_column' => true,
+			'rewrite'           => array( 'slug' => 'download-category', 'with_front' => false ),
+		)
+	);
+}
+add_action( 'init', 'ipp_tw_register_download_cpt' );

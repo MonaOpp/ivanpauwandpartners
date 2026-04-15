@@ -13,6 +13,10 @@ $post_id  = get_queried_object_id();
 $cta_bg   = function_exists( 'get_field' ) ? get_field( 'cta_background_color', $post_id ) : '';
 $cta_text = function_exists( 'get_field' ) ? get_field( 'call_to_action', $post_id ) : '';
 
+if ( empty( $cta_text ) ) {
+	$cta_text = 'NEED EXPERT <em>LEGAL<br>GUIDANCE?</em>';
+}
+
 // Contact page URL.
 $contact_page = get_permalink( get_page_by_path( 'contact-us' ) );
 if ( ! $contact_page ) {

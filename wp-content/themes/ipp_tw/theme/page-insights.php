@@ -1,8 +1,8 @@
 <?php
 /**
- * Template for the Insight (blog) page.
+ * Template for the Insights (blog) page.
  *
- * URL: /resources/insight/
+ * URL: /resources/insights/
  * Left sidebar: search + category filters.
  * Right: 3-column grid of post cards with pagination.
  *
@@ -48,14 +48,10 @@ $categories = get_categories(
 ?>
 
 	<!-- Banner -->
-	<section class="page-banner page-banner--no-image" style="background:#18273A;">
-		<div class="page-banner__content layout-wrapper">
-			<h1>Insight</h1>
-		</div>
-	</section>
+	<?php get_template_part( 'template-parts/content/content', 'banner' ); ?>
 
 	<!-- Blog content -->
-	<section class="w-full bg-[#18273A]" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
+	<section class="w-full " style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
 		<div class="layout-wrapper mx-auto px-6 py-12">
 			<div class="flex flex-col gap-10 lg:flex-row">
 
@@ -70,7 +66,7 @@ $categories = get_categories(
 							<input type="text"
 								   name="insight_s"
 								   class="insight-search-input"
-								   placeholder="Search..."
+								   placeholder="Search.."
 								   value="<?php echo esc_attr( $search_query ); ?>">
 							<svg class="insight-search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
@@ -118,9 +114,9 @@ $categories = get_categories(
 										<?php endif; ?>
 									</div>
 									<div class="insight-card__body">
-										<h3 class="insight-card__title">
+										<h4 class="insight-card__title">
 											<?php the_title(); ?>
-										</h3>
+										</h4>
 										<p class="insight-card__excerpt">
 											<?php echo esc_html( wp_trim_words( get_the_excerpt(), 20, '...' ) ); ?>
 										</p>

@@ -521,3 +521,70 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 		} );
 	} );
 } )();
+
+// =========================================================
+// Single Post — Table of Contents (TOC) from H2 / H3
+// =========================================================
+( function () {
+	var toc = document.getElementById( 'single-toc' );
+	var content = document.querySelector( '.single-post-content' );
+
+	if ( ! toc || ! content ) {
+		return;
+	}
+
+	var headings = content.querySelectorAll( 'h2, h3' );
+	if ( ! headings.length ) {
+		return;
+	}
+
+	var fragment = document.createDocumentFragment();
+
+	headings.forEach( function ( heading, index ) {
+		// Generate an ID if the heading doesn't have one.
+		if ( ! heading.id ) {
+			heading.id = 'section-' + index;
+		}
+
+		var link = document.createElement( 'a' );
+		link.href = '#' + heading.id;
+		link.textContent = heading.textContent;
+		link.setAttribute( 'data-level', heading.tagName === 'H3' ? '3' : '2' );
+
+		link.addEventListener( 'click', function ( e ) {
+			e.preventDefault();
+			var target = document.getElementById( heading.id );
+			if ( target ) {
+				target.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+				history.replaceState( null, '', '#' + heading.id );
+			}
+		} );
+
+		fragment.appendChild( link );
+	} );
+
+	toc.appendChild( fragment );
+
+	// Highlight active TOC link on scroll.
+	var tocLinks = toc.querySelectorAll( 'a' );
+	var observer = new IntersectionObserver(
+		function ( entries ) {
+			entries.forEach( function ( entry ) {
+				if ( entry.isIntersecting ) {
+					tocLinks.forEach( function ( l ) {
+						l.classList.remove( 'toc-active' );
+					} );
+					var active = toc.querySelector( 'a[href="#' + entry.target.id + '"]' );
+					if ( active ) {
+						active.classList.add( 'toc-active' );
+					}
+				}
+			} );
+		},
+		{ rootMargin: '0px 0px -70% 0px', threshold: 0 }
+	);
+
+	headings.forEach( function ( heading ) {
+		observer.observe( heading );
+	} );
+} )();

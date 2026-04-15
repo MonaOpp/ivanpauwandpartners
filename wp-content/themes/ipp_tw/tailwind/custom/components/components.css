@@ -498,11 +498,21 @@ body.home #page.layout-wrapper {
 	text-align: center;
 }
 
+body.single-post .cta-banner {
+	background-color: #AA7040;
+}
+
 .cta-banner__inner {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 24px;
+}
+
+body.single-post .cta-banner__inner {
+	background-color: #AA7040;
+	padding: 60px 40px;
+	border-radius: 10px;
 }
 
 .cta-banner__text {
@@ -1108,15 +1118,15 @@ body.home #page.layout-wrapper {
 .insight-search-input {
 	width: 100%;
 	padding: 0.5rem 0.75rem 0.5rem 2.25rem;
-	border: 1px solid rgba(255, 255, 255, 0.3);
+	border: 1px solid #D6D6D6;
 	border-radius: 4px;
 	background: transparent;
-	color: #fff;
+	color: #0D162266;
 	font-size: 0.85rem;
 }
 
 .insight-search-input::placeholder {
-	color: rgba(255, 255, 255, 0.5);
+	color: #898989;
 }
 
 .insight-search-input:focus {
@@ -1131,7 +1141,7 @@ body.home #page.layout-wrapper {
 	transform: translateY(-50%);
 	width: 1rem;
 	height: 1rem;
-	color: rgba(255, 255, 255, 0.5);
+	color: #898989;
 	pointer-events: none;
 }
 
@@ -1145,7 +1155,7 @@ body.home #page.layout-wrapper {
 .insight-cat-link {
 	display: block;
 	padding: 0.6rem 0;
-	color: rgba(255, 255, 255, 0.7);
+	color: #0D162266;
 	text-decoration: none;
 	font-size: 0.85rem;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -1154,13 +1164,13 @@ body.home #page.layout-wrapper {
 
 .insight-cat-link:first-child {
 	font-weight: 700;
-	color: #fff;
+	color: #0D1622;
 	font-size: 0.9rem;
 }
 
 .insight-cat-link:hover,
 .insight-cat-link--active {
-	color: #AA7040;
+	color: #0D1622;
 }
 
 .insight-cat-link--clear {
@@ -1209,19 +1219,21 @@ body.home #page.layout-wrapper {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+	background-color: #3A5F82;
 }
 
-.insight-card__title {
+h4.insight-card__title {
 	font-size: 0.9rem;
 	font-weight: 700;
-	color: #fff;
+	color: #ffffff;
 	margin: 0 0 0.5rem;
 	line-height: 1.4;
+	text-align: left;
 }
 
 .insight-card__excerpt {
 	font-size: 0.78rem;
-	color: rgba(255, 255, 255, 0.65);
+	color: #fff;
 	margin: 0 0 1rem;
 	line-height: 1.6;
 	flex: 1;
@@ -1232,8 +1244,7 @@ body.home #page.layout-wrapper {
 	padding: 0.4rem 1.25rem;
 	background: #AA7040;
 	color: #fff;
-	font-size: 0.75rem;
-	font-weight: 600;
+	font-size: 16px;
 	border-radius: 4px;
 	text-decoration: none;
 	align-self: flex-start;
@@ -1296,5 +1307,389 @@ body.home #page.layout-wrapper {
 
 .insight-load-more-btn:hover {
 	background: #96623a;
+}
+
+/* =============================================================
+   Single Post — TOC Sidebar
+   ============================================================= */
+
+.single-toc {
+	position: sticky;
+	top: 2rem;
+}
+
+.single-toc a {
+	display: block;
+	padding: 0.45rem 0;
+	font-size: 0.85rem;
+	color: #898989;
+	text-decoration: none;
+	border-left: 2px solid transparent;
+	padding-left: 0.75rem;
+	line-height: 1.5;
+	transition: color 0.2s, border-color 0.2s;
+}
+
+.single-toc a:hover,
+.single-toc a.toc-active {
+	color: #AA7040;
+	border-left-color: #AA7040;
+}
+
+.single-toc a[data-level="3"] {
+	padding-left: 1.5rem;
+	font-size: 0.8rem;
+}
+
+/* =============================================================
+   Single Post — Content
+   ============================================================= */
+
+.single-post-content {
+	color: #333;
+	line-height: 1.8;
+	font-size: 0.95rem;
+}
+
+.single-post-content h2 {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: #18273A;
+	margin: 2rem 0 1rem;
+}
+
+.single-post-content h3 {
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: #18273A;
+	margin: 1.5rem 0 0.75rem;
+}
+
+.single-post-content p {
+	margin: 0 0 1.25rem;
+}
+
+.single-post-content ul,
+.single-post-content ol {
+	margin: 0 0 1.25rem 1.5rem;
+}
+
+.single-post-content a {
+	color: #AA7040;
+	text-decoration: underline;
+}
+
+.single-post-content img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 6px;
+	margin: 1rem 0;
+}
+
+/* =============================================================
+   Related Articles heading
+   ============================================================= */
+
+.related-articles__heading {
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: #3A5F82;
+	margin: 0 0 2rem;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+/* =============================================================
+   Downloads Page
+   ============================================================= */
+
+/* Filters bar */
+.dl-filters {
+	margin-bottom: 1.5rem;
+}
+
+.dl-filters__row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+}
+
+.dl-filters__input {
+	padding: 0.5rem 0.75rem;
+	border: 1px solid #D6D6D6;
+	border-radius: 4px;
+	font-size: 0.85rem;
+	color: #333;
+	background: #fff;
+	min-width: 200px;
+}
+
+.dl-filters__input::placeholder {
+	color: #898989;
+}
+
+.dl-filters__select {
+	padding: 0.5rem 0.75rem;
+	border: 1px solid #D6D6D6;
+	border-radius: 4px;
+	font-size: 0.85rem;
+	color: #333;
+	background: #fff;
+	min-width: 180px;
+	cursor: pointer;
+}
+
+/* Download list rows */
+.dl-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.dl-row {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.9rem 0;
+	border-bottom: 1px solid #D6D6D6;
+}
+
+.dl-row:first-child {
+	border-top: 1px solid #D6D6D6;
+}
+
+.dl-row__name {
+	flex: 1;
+	font-size: 0.85rem;
+	color: #333;
+	line-height: 1.4;
+}
+
+.dl-row__cat {
+	flex: 0 0 160px;
+	font-size: 0.85rem;
+	color: #666;
+	text-align: left;
+}
+
+.dl-row__btn {
+	flex: 0 0 auto;
+	display: inline-block;
+	padding: 0.4rem 1.25rem;
+	background: #3A5F82;
+	color: #fff;
+	font-size: 0.8rem;
+	font-weight: 600;
+	border-radius: 4px;
+	text-decoration: none;
+	transition: background 0.2s;
+	white-space: nowrap;
+}
+
+.dl-row__btn:hover {
+	background: #2a4a66;
+}
+
+/* Bottom bar: load more + pagination */
+.dl-bottom {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 1.5rem;
+}
+
+.dl-pagination ul {
+	display: flex;
+	gap: 0.25rem;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.dl-pagination li a,
+.dl-pagination li span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2rem;
+	height: 2rem;
+	padding: 0 0.5rem;
+	font-size: 0.8rem;
+	border-radius: 4px;
+	text-decoration: none;
+	color: #333;
+	background: #f0f0f0;
+	transition: background 0.2s, color 0.2s;
+}
+
+.dl-pagination li span.current {
+	background: #3A5F82;
+	color: #fff;
+}
+
+.dl-pagination li a:hover {
+	background: #3A5F82;
+	color: #fff;
+}
+
+/* Section heading (Court Judgments) */
+.dl-section-heading {
+	font-size: 2rem;
+	color: #3A5F82;
+	text-transform: uppercase;
+	margin: 0 0 1.5rem;
+	line-height: 1.2;
+}
+
+@media (max-width: 767px) {
+	.dl-row {
+		flex-wrap: wrap;
+	}
+
+	.dl-row__cat {
+		flex: 0 0 100%;
+	}
+
+	.dl-row__btn {
+		flex: 0 0 100%;
+		text-align: center;
+	}
+
+	.dl-bottom {
+		flex-direction: column;
+		gap: 1rem;
+	}
+}
+
+/* =============================================================
+   Contact Us Page
+   ============================================================= */
+
+/* Get in Touch section */
+.contact-info__heading {
+	font-size: 1.75rem;
+	font-weight: 800;
+	color: #3A5F82;
+	text-transform: uppercase;
+	margin: 0 0 1rem;
+}
+
+.contact-info__desc {
+	font-size: 0.9rem;
+	color: #555;
+	line-height: 1.7;
+	margin-bottom: 1.5rem;
+}
+
+.contact-info__desc p {
+	margin: 0 0 1rem;
+}
+
+.contact-info__item {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.9rem;
+	color: #3A5F82;
+	text-decoration: none;
+	margin-bottom: 0.5rem;
+	transition: color 0.2s;
+}
+
+.contact-info__item:hover {
+	color: #AA7040;
+}
+
+.contact-info__icon {
+	width: 1rem;
+	height: 1rem;
+	flex-shrink: 0;
+}
+
+/* Contact form (Gravity Forms overrides) */
+.contact-form .gform_wrapper input[type="text"],
+.contact-form .gform_wrapper input[type="email"],
+.contact-form .gform_wrapper input[type="tel"],
+.contact-form .gform_wrapper select,
+.contact-form .gform_wrapper textarea {
+	width: 100%;
+	padding: 0.6rem 0.75rem;
+	border: 1px solid #D6D6D6;
+	border-radius: 4px;
+	font-size: 0.85rem;
+	color: #333;
+	background: #fff;
+}
+
+.contact-form .gform_wrapper input::placeholder,
+.contact-form .gform_wrapper textarea::placeholder {
+	color: #898989;
+}
+
+.contact-form .gform_wrapper textarea {
+	min-height: 160px;
+	resize: vertical;
+}
+
+.contact-form .gform_wrapper .gform_footer input[type="submit"],
+.contact-form .gform_wrapper .gform_page_footer input[type="submit"] {
+	display: inline-block;
+	padding: 0.6rem 2rem;
+	background: #AA7040;
+	color: #fff;
+	font-size: 0.85rem;
+	font-weight: 600;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.contact-form .gform_wrapper .gform_footer input[type="submit"]:hover,
+.contact-form .gform_wrapper .gform_page_footer input[type="submit"]:hover {
+	background: #96623a;
+}
+
+.contact-form .gform_wrapper .gfield_label {
+	display: none;
+}
+
+/* Practice Area category cards */
+.contact-pa-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 2rem;
+	margin-top: 2rem;
+	padding-top: 1.5rem;;
+}
+
+.contact-pa-card__title {
+	font-size: 0.95rem;
+	font-weight: 700;
+	color: #18273A;
+	text-transform: uppercase;
+	margin: 0 0 0.5rem;
+}
+
+.contact-pa-card__title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.contact-pa-card__title a:hover {
+	color: #AA7040;
+}
+
+.contact-pa-card__desc {
+	font-size: 0.82rem;
+	color: #666;
+	line-height: 1.6;
+	margin: 0;
+}
+
+@media (max-width: 767px) {
+	.contact-pa-grid {
+		grid-template-columns: 1fr;
+	}
 }
 
