@@ -26,10 +26,9 @@ if ( empty( $team_members ) ) {
 }
 
 $total = count( $team_members );
-$pages = ceil( $total / 4 );
 ?>
 
-<section class="team-grid-section w-full bg-[#D9D9D9] py-16" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
+<section class="team-grid-section w-full bg-[#fff] py-16" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
 	<div class="layout-wrapper mx-auto px-6">
 
 		<!-- Heading -->
@@ -37,9 +36,8 @@ $pages = ceil( $total / 4 );
 			<span class="text-[#3A5F82]">OUR</span> <span class="italic text-[#AA7040]">TEAM OF<br>ATTORNEYS</span>
 		</h2>
 
-		<!-- Swiper carousel -->
-		<div class="swiper team-grid-swiper">
-			<div class="swiper-wrapper">
+		<!-- Team grid -->
+		<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 				<?php foreach ( $team_members as $index => $member ) :
 					$name      = get_field( 'tm_name', $member->ID );
 					$job_title = get_field( 'tm_job_title', $member->ID );
@@ -55,7 +53,6 @@ $pages = ceil( $total / 4 );
 					}
 					$display_name = $name ? $name : $member->post_title;
 				?>
-					<div class="swiper-slide">
 						<div class="team-card" data-team-index="<?php echo esc_attr( $index ); ?>">
 							<!-- Image -->
 							<div class="team-card__image-wrap">
@@ -83,22 +80,7 @@ $pages = ceil( $total / 4 );
 								<p class="team-card__title"><?php echo esc_html( $job_title ); ?></p>
 							</div>
 						</div>
-					</div>
 				<?php endforeach; ?>
-			</div>
-		</div>
-
-		<!-- Pagination -->
-		<div class="mt-6 flex items-center gap-3">
-			<button class="team-grid__prev flex h-8 w-8 items-center justify-center rounded-full border border-[#3A5F82] text-[#3A5F82]" aria-label="Previous">
-				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-			</button>
-			<span class="team-grid__counter text-sm text-[#132E47]">
-				<strong class="team-grid__current">1</strong> / <?php echo esc_html( $pages ); ?>
-			</span>
-			<button class="team-grid__next flex h-8 w-8 items-center justify-center rounded-full border border-[#3A5F82] text-[#3A5F82]" aria-label="Next">
-				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-			</button>
 		</div>
 
 	</div>

@@ -315,60 +315,117 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 	goTo( 0 );
 } )();
 
-// ── Team Timeline Swiper ────────────────────────────────────
+// ── Team Timeline Navigation ────────────────────────────────
 ( function () {
-	const container = document.querySelector( '.team-timeline-swiper' );
-	if ( ! container || typeof Swiper === 'undefined' ) {
+	const dots      = document.querySelectorAll( '.team-timeline__dot' );
+	const names     = document.querySelectorAll( '.team-timeline__name-col' );
+	const descs     = document.querySelectorAll( '.team-timeline__desc' );
+	const sliders   = document.querySelectorAll( '.team-timeline__slider' );
+	const prevBtn   = document.querySelector( '.team-timeline__prev' );
+	const nextBtn   = document.querySelector( '.team-timeline__next' );
+	const counterEl = document.querySelector( '.team-timeline__current' );
+
+	if ( ! dots.length ) {
 		return;
 	}
 
-	const prevBtn    = document.querySelector( '.team-timeline__prev' );
-	const nextBtn    = document.querySelector( '.team-timeline__next' );
-	const counterEl  = document.querySelector( '.team-timeline__current' );
+	const total   = dots.length;
+	let active    = 0;
 
-	// eslint-disable-next-line no-undef
-	const swiper = new Swiper( '.team-timeline-swiper', {
-		slidesPerView: 1,
-		spaceBetween: 30,
-		allowTouchMove: true,
-		navigation: {
-			prevEl: '.team-timeline__prev',
-			nextEl: '.team-timeline__next',
-		},
-		on: {
-			slideChange: function () {
-				const idx = this.activeIndex;
+	function getVisible() {
+		return window.innerWidth >= 1024 ? 3 : 1;
+	}
 
-				// Update counter
-				if ( counterEl ) {
-					counterEl.textContent = idx + 1;
-				}
+	function slideWindow() {
+		var visible = getVisible();
+		var windowStart = Math.min( active, Math.max( 0, total - visible ) );
+		if ( active > windowStart + visible - 1 ) {
+			windowStart = active - visible + 1;
+		}
+		if ( windowStart < 0 ) {
+			windowStart = 0;
+		}
 
-				// Activate first dot of current slide
-				document.querySelectorAll( '.team-timeline__dot' ).forEach( ( dot ) => {
-					dot.classList.remove( 'team-timeline__dot--active' );
-				} );
-				const activeDot = container.querySelector(
-					'.swiper-slide-active .team-timeline__dot[data-index="0"]'
-				);
-				if ( activeDot ) {
-					activeDot.classList.add( 'team-timeline__dot--active' );
-				}
-			},
-			init: function () {
-				// Activate first dot on init
-				const firstDot = container.querySelector(
-					'.swiper-slide-active .team-timeline__dot[data-index="0"]'
-				);
-				if ( firstDot ) {
-					firstDot.classList.add( 'team-timeline__dot--active' );
-				}
-			},
-		},
+		var pct = -( windowStart / total ) * 100;
+		sliders.forEach( function ( el ) {
+			el.style.transform = 'translateX(' + pct + '%)';
+		} );
+	}
+
+	function goToMember( idx ) {
+		if ( idx < 0 || idx >= total ) {
+			return;
+		}
+		active = idx;
+
+		// Update counter
+		if ( counterEl ) {
+			counterEl.textContent = idx + 1;
+		}
+
+		// Update dots
+		dots.forEach( ( dot, i ) => {
+			dot.classList.toggle( 'team-timeline__dot--active', i === idx );
+		} );
+
+		// Update names — active is full opacity, others faded
+		names.forEach( ( col, i ) => {
+			if ( i === idx ) {
+				col.classList.remove( 'opacity-30' );
+			} else {
+				col.classList.add( 'opacity-30' );
+			}
+		} );
+
+		// Update descriptions — active visible, others greyed out
+		descs.forEach( ( desc, i ) => {
+			if ( i === idx ) {
+				desc.classList.remove( 'opacity-30' );
+			} else {
+				desc.classList.add( 'opacity-30' );
+			}
+		} );
+
+		slideWindow();
+	}
+
+	// Dot click navigation
+	dots.forEach( ( dot, i ) => {
+		dot.addEventListener( 'click', () => {
+			goToMember( i );
+		} );
 	} );
+
+	// Prev / Next buttons
+	if ( prevBtn ) {
+		prevBtn.addEventListener( 'click', () => {
+			goToMember( active - 1 );
+		} );
+	}
+	if ( nextBtn ) {
+		nextBtn.addEventListener( 'click', () => {
+			goToMember( active + 1 );
+		} );
+	}
+
+	// Size the grid columns so 3 fit in the container width.
+	// Each column = containerWidth / 3, so total grid width = (total/3) * 100%.
+	function sizeGrid() {
+		var visible = getVisible();
+		var widthPct = ( total / visible ) * 100;
+		sliders.forEach( function ( el ) {
+			el.style.width = widthPct + '%';
+		} );
+		slideWindow();
+	}
+	sizeGrid();
+	window.addEventListener( 'resize', sizeGrid );
+
+	// Init first member
+	goToMember( 0 );
 } )();
 
-// ── Team Grid Carousel + Bio Popup ──────────────────────────
+// ── Team Grid Carousel ──────────────────────────────────────
 ( function () {
 	const gridContainer = document.querySelector( '.team-grid-swiper' );
 	if ( ! gridContainer || typeof Swiper === 'undefined' ) {
@@ -410,6 +467,9 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 	} );
 
 	// ── Bio Popup ──────────────────────────────────────────
+} )();
+
+( function () {
 	const popup     = document.getElementById( 'team-popup' );
 	const popupImg  = document.getElementById( 'team-popup-image' );
 	const popupName = document.getElementById( 'team-popup-name' );
@@ -585,5 +645,25 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 
 	headings.forEach( function ( heading ) {
 		observer.observe( heading );
+	} );
+} )();
+
+/* =============================================================
+   Scroll to Top Button
+   ============================================================= */
+( function () {
+	var btn = document.getElementById( 'scroll-to-top' );
+	if ( ! btn ) return;
+
+	window.addEventListener( 'scroll', function () {
+		if ( window.scrollY > 400 ) {
+			btn.classList.add( 'visible' );
+		} else {
+			btn.classList.remove( 'visible' );
+		}
+	} );
+
+	btn.addEventListener( 'click', function () {
+		window.scrollTo( { top: 0, behavior: 'smooth' } );
 	} );
 } )();

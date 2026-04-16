@@ -8,8 +8,46 @@
  *  — from https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes
  */
 
+/* =============================================================
+   Scroll to Top Button
+   ============================================================= */
+
+.scroll-to-top {
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
+	z-index: 100;
+	width: 48px;
+	height: 48px;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	background-color: #3A5F82;
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.2s ease;
+}
+
+.scroll-to-top.visible {
+	display: flex;
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+	background-color: #2a4a66;
+}
+
 p {
 	font-size: 15px;
+}
+body {
+	overflow-x: hidden;
 }
 h4 {
 	font-family: DM Sans;
@@ -164,7 +202,9 @@ body.home #page.layout-wrapper {
 	right: 0;
 	bottom: 0;
 	width: min(360px, 85vw);
-	background: #FFFFFF8C;
+	background: rgba(201, 197, 197, 0.45);
+	backdrop-filter: blur(18px);
+	-webkit-backdrop-filter: blur(18px);
 	z-index: 300;
 	display: flex;
 	flex-direction: column;
@@ -173,9 +213,9 @@ body.home #page.layout-wrapper {
 	transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	overflow-y: auto;
 	background-image: url(http://ipp.test/wp-content/uploads/2026/04/Logo-2.png);
-	background-size: cover;
+	background-size: contain;
 	background-repeat: no-repeat;
-
+	background-position: top center;
 }
 
 .flyout-nav.is-open {
@@ -234,8 +274,8 @@ body.home #page.layout-wrapper {
 /* Submenu toggle button */
 .submenu-toggle {
 	position: absolute;
-	right: 0;
-	top: 0.6rem;
+	right:30px;
+	top: 19px;
 	background: none;
 	border: none;
 	cursor: pointer;
@@ -459,7 +499,7 @@ body.home #page.layout-wrapper {
 .home-slide__overlay {
 	position: absolute;
 	inset: 0;
-	background: rgba(0, 0, 0, 0.4);
+	background: #0000009C;
 }
 
 .home-slide__content {
@@ -473,6 +513,8 @@ body.home #page.layout-wrapper {
 .home-slide__content h1,
 .home-slide__content h2 {
 	text-align: left;
+	line-height: 1.1;
+	padding-left: 1rem;
 }
 
 .home-slide__content h1 em,
@@ -504,7 +546,7 @@ body.home #page.layout-wrapper {
 .site-footer {
 	background-color: #3A5F82;
 	color: #fff;
-	padding: 2.5rem 0 1.5rem;
+	padding: 5rem 0 4rem;
 	width: 100vw;
 	position: relative;
 	left: 50%;
@@ -545,6 +587,20 @@ body.single-post .cta-banner__inner {
 
 .cta-banner__text {
 	color: #fff;
+	
+	font-weight: 700;
+	line-height: 1.3;
+	margin: 0;
+}
+
+.cta-banner__text h4 {
+	color: #fff !important;
+	font-size: 70px;
+}
+
+.cta-banner__title,
+.cta-banner__title * {
+	color: #3A5F82 !important;
 	font-size: 70px;
 	font-weight: 700;
 	line-height: 1.3;
@@ -569,7 +625,9 @@ body.single-post .cta-banner__inner {
 
 @media (max-width: 767px) {
 	.cta-banner__text,
-	.cta-banner__text h3 {
+	.cta-banner__text h4,
+	.cta-banner__title,
+	.cta-banner__title * {
 		font-size: 40px;
 	}
 }
@@ -582,11 +640,12 @@ body.single-post .cta-banner__inner {
 	font-size: 64px;
 	line-height: 1;
 	margin: 0;
+	text-align: left;
 }
 
 .team-timeline__row {
 	display: grid;
-	gap: 16px;
+	gap: 24px;
 }
 
 .team-timeline__track {
@@ -600,7 +659,7 @@ body.single-post .cta-banner__inner {
 	left: 0;
 	right: 0;
 	height: 2px;
-	background-color: #C7976E;
+	background-color: #000;
 	transform: translateY(-50%);
 }
 
@@ -634,28 +693,30 @@ body.single-post .cta-banner__inner {
 }
 
 .team-card {
-	background: #fff;
+	background: #D8D8D8;
 	border-radius: 8px;
 	overflow: hidden;
+	border: 1px solid #3A5F82;
 }
 
 .team-card__image-wrap {
 	position: relative;
 	overflow: hidden;
-	aspect-ratio: 3 / 4;
+	aspect-ratio: 4 / 3;
 }
 
 .team-card__image {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	object-position: top;
 	display: block;
 }
 
 .team-card__overlay {
 	position: absolute;
 	inset: 0;
-	background-color: rgba(24, 39, 58, 0.85);
+	background-color: #18273A;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -670,39 +731,40 @@ body.single-post .cta-banner__inner {
 .team-card__bio-btn {
 	display: inline-block;
 	padding: 10px 28px;
-	border: 2px solid #fff;
+	border: none;
 	border-radius: 6px;
 	color: #fff;
 	font-size: 14px;
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
-	background: none;
+	background: #AA7040;
 	cursor: pointer;
-	transition: background-color 0.2s ease;
+	transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .team-card__bio-btn:hover {
-	background-color: rgba(255, 255, 255, 0.15);
+	background-color: #fff;
+	color: #AA7040;
 }
 
 .team-card__info {
 	padding: 12px 8px;
 	text-align: center;
+	background-color: #3A5F82;
 }
 
 .team-card__name {
-	font-size: 14px;
+	font-size:18px;
 	font-weight: 700;
-	color: #132E47;
+	color: #fff;
 	margin: 0;
 	text-transform: uppercase;
 }
 
 .team-card__title {
-	font-size: 12px;
-	color: #6B7280;
-	margin: 4px 0 0;
+	font-size: 16px;
+	color: #fff;
 }
 
 /* ── Bio Popup ──────────────────────────────────────────────── */
@@ -736,8 +798,8 @@ body.single-post .cta-banner__inner {
 	background: #fff;
 	border-radius: 12px;
 	width: 90vw;
-	max-width: 860px;
-	height: 520px;
+	max-width: 1100px;
+	max-height: 90vh;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
@@ -763,27 +825,31 @@ body.single-post .cta-banner__inner {
 
 .team-popup__inner {
 	display: flex;
-	height: 100%;
+	min-height: 0;
+	overflow-y: auto;
+	flex: 1;
 }
 
 .team-popup__image-col {
 	width: 40%;
 	flex-shrink: 0;
-	background: #F3F4F6;
+	padding: 24px;
+	display: flex;
+	align-items: flex-start;
 }
 
 .team-popup__image {
 	width: 100%;
-	height: 100%;
+	height: auto;
 	object-fit: cover;
+	object-position: top;
 	display: block;
+	border-radius: 8px;
 }
 
 .team-popup__info-col {
 	width: 60%;
 	padding: 32px;
-	overflow-y: auto;
-	border-left: 4px solid #3A5F82;
 }
 
 .team-popup__name {
@@ -791,6 +857,7 @@ body.single-post .cta-banner__inner {
 	font-weight: 700;
 	color: #132E47;
 	margin: 0;
+	text-align: left;
 }
 
 .team-popup__job-title {
@@ -808,8 +875,9 @@ body.single-post .cta-banner__inner {
 
 @media (max-width: 767px) {
 	.team-popup__dialog {
-		height: 90vh;
+		max-height: 90vh;
 		max-width: 95vw;
+		overflow-y: auto;
 	}
 
 	.team-popup__inner {
@@ -818,14 +886,13 @@ body.single-post .cta-banner__inner {
 
 	.team-popup__image-col {
 		width: 100%;
-		height: 200px;
+		padding: 16px;
 	}
 
 	.team-popup__info-col {
 		width: 100%;
 		padding: 20px;
 		border-left: none;
-		border-top: 4px solid #3A5F82;
 	}
 }
 
@@ -859,13 +926,15 @@ body.single-post .cta-banner__inner {
 .flagship-card {
 	border-radius: 8px;
 	overflow: hidden;
+	border: 1px solid #3A5F82;
+	display: flex;
+	flex-direction: column;
 }
 
 .flagship-card__image-wrap {
 	position: relative;
 	aspect-ratio: 4 / 3;
 	overflow: hidden;
-	border-radius: 8px;
 }
 
 .flagship-card__image {
@@ -875,26 +944,25 @@ body.single-post .cta-banner__inner {
 	display: block;
 }
 
-.flagship-card__overlay {
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(to top, rgba(19, 46, 71, 0.85) 0%, rgba(19, 46, 71, 0.3) 50%, transparent 100%);
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	padding: 16px;
+.flagship-card__info {
+	padding: 12px 8px;
+	text-align: center;
+	background-color: #3A5F82;
+	flex: 1;
 }
 
 h3.flagship-card__title {
-	font-size: 20px;
-	color: #000000;
+	font-size: 18px;
+	color: #fff;
 	margin: 0;
 	line-height: 1.3;
+	font-weight: 700;
+	text-transform: uppercase;
 }
 
 .flagship-card__type {
-	font-size: 12px;
-	color: rgba(255, 255, 255, 0.8);
+	font-size: 14px;
+	color: #fff;
 	margin: 4px 0 0;
 }
 
@@ -1010,7 +1078,7 @@ h3.flagship-card__title {
 	display: inline-block;
 	padding: 0.5rem 1.25rem;
 	border: 1px solid #D1D5DB;
-	border-radius: 9999px;
+	border-radius: 8px;
 	font-size: 0.8rem;
 	font-weight: 600;
 	color: #374151;
@@ -1040,7 +1108,7 @@ h3.flagship-card__title {
 
 /* Practice area section */
 .pa-section {
-	padding: 2.5rem 0;
+	padding: 4rem 0;
 	scroll-margin-top: 2rem;
 }
 
@@ -1077,9 +1145,11 @@ h3.flagship-card__title {
 
 /* Info rows (numbered items) */
 .pa-info-row {
-	display: flex;
-	gap: 0.75rem;
-	padding: 1rem 0;
+	display: grid;
+	grid-template-columns: 4rem 1fr 1fr;
+	align-items: start;
+	gap: 1.5rem;
+	padding: 1.5rem 0;
 	border-bottom: 1px solid #E5E7EB;
 }
 
@@ -1088,19 +1158,18 @@ h3.flagship-card__title {
 }
 
 .pa-info-row__number {
-	font-size: 0.85rem;
+	font-size: 1.1rem;
 	font-weight: 700;
-	color: #AA7040;
+	color: #000;
 	flex-shrink: 0;
-	min-width: 2rem;
-	padding-top: 0.1rem;
 }
 
 .pa-info-row__title {
-	font-size: 0.9rem;
+	font-size: 1rem;
 	font-weight: 700;
 	color: #18273A;
-	margin: 0 0 0.25rem;
+	margin: 0;
+	text-transform: uppercase;
 }
 
 .pa-info-row__desc {
@@ -1385,6 +1454,10 @@ h4.insight-card__title {
 	font-size: 0.95rem;
 }
 
+.single-post-content > * {
+	max-width: none;
+}
+
 .single-post-content h2 {
 	font-size: 1.5rem;
 	font-weight: 700;
@@ -1510,7 +1583,7 @@ h4.insight-card__title {
 	flex: 0 0 auto;
 	display: inline-block;
 	padding: 0.4rem 1.25rem;
-	background: #3A5F82;
+	background: #000;
 	color: #fff;
 	font-size: 0.8rem;
 	font-weight: 600;
@@ -1521,7 +1594,7 @@ h4.insight-card__title {
 }
 
 .dl-row__btn:hover {
-	background: #2a4a66;
+	background: #333;
 }
 
 /* Bottom bar: load more + pagination */

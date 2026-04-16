@@ -71,6 +71,11 @@ $pa_categories = get_terms(
 						</a>
 					<?php endif; ?>
 
+					<div class="contact-info__item">
+						<svg class="contact-info__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+						<span>448 Sussex Ave, Lynnwood, Pretoria, 0081</span>
+					</div>
+
 					<!-- Practice Area Categories -->
 					<?php if ( ! is_wp_error( $pa_categories ) && ! empty( $pa_categories ) ) : ?>
 						<div class="contact-pa-grid">
@@ -96,6 +101,12 @@ $pa_categories = get_terms(
 				</div>
 
 			</div>
+
+			<!-- Google Map -->
+			<div style="margin-top: 3rem;">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3593.144235778963!2d28.2675923!3d-25.765798999999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e9560f6de96d53d%3A0xa08425c28e8e8469!2sIvan%20Pauw%20%26%20Partners!5e0!3m2!1sen!2sza!4v1776339614264!5m2!1sen!2sza" width="100%" height="450" style="border:0;border-radius:8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			</div>
+
 		</div>
 	</section>
 

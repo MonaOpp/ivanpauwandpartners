@@ -32,9 +32,7 @@ get_header();
 				<div class="w-full lg:w-1/4">
 					<ul class="flagship-tabs list-none p-0 m-0 space-y-2">
 						<li>
-							<button class="flagship-tab flagship-tab--active" data-term="all" type="button">
-								All Provinces
-							</button>
+					
 						</li>
 						<?php if ( ! is_wp_error( $provinces ) && ! empty( $provinces ) ) : ?>
 							<?php foreach ( $provinces as $term ) : ?>
@@ -85,12 +83,12 @@ get_header();
 											 alt="<?php echo esc_attr( $display_title ); ?>"
 											 class="flagship-card__image" />
 									<?php endif; ?>
-									<div class="flagship-card__overlay">
-										<h3 class="flagship-card__title"><?php echo esc_html( $display_title ); ?></h3>
-										<?php if ( $type ) : ?>
-											<p class="flagship-card__type"><?php echo esc_html( $type ); ?></p>
-										<?php endif; ?>
-									</div>
+								</div>
+								<div class="flagship-card__info">
+									<h3 class="flagship-card__title"><?php echo esc_html( $display_title ); ?></h3>
+									<?php if ( $type ) : ?>
+										<p class="flagship-card__type"><?php echo esc_html( $type ); ?></p>
+									<?php endif; ?>
 								</div>
 							</div>
 						<?php endforeach; ?>

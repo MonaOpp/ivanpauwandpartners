@@ -140,14 +140,17 @@ $court_query = new WP_Query( $court_args );
 					<?php while ( $main_query->have_posts() ) : $main_query->the_post();
 						$dl_name = get_field( 'download_name' );
 						$dl_file = get_field( 'download_file' );
+						$dl_pdf  = get_field( 'download_pdf' );
 						$dl_cats = get_the_terms( get_the_ID(), 'download_category' );
 						$cat_name = ( $dl_cats && ! is_wp_error( $dl_cats ) ) ? $dl_cats[0]->name : '';
+						$pdf_url  = is_array( $dl_pdf ) ? $dl_pdf['url'] : $dl_pdf;
+						$file_url = $pdf_url ? $pdf_url : $dl_file;
 					?>
 						<div class="dl-row">
 							<span class="dl-row__name"><?php echo esc_html( $dl_name ? $dl_name : get_the_title() ); ?></span>
 							<span class="dl-row__cat"><?php echo esc_html( $cat_name ); ?></span>
-							<?php if ( $dl_file ) : ?>
-								<a href="<?php echo esc_url( $dl_file ); ?>" target="_blank" rel="noopener noreferrer" class="dl-row__btn">Download File</a>
+							<?php if ( $file_url ) : ?>
+								<a href="<?php echo esc_url( $file_url ); ?>" target="_blank" rel="noopener noreferrer" class="dl-row__btn">Download File</a>
 							<?php endif; ?>
 						</div>
 					<?php endwhile; ?>
@@ -199,14 +202,17 @@ $court_query = new WP_Query( $court_args );
 				<?php while ( $court_query->have_posts() ) : $court_query->the_post();
 					$dl_name = get_field( 'download_name' );
 					$dl_file = get_field( 'download_file' );
+					$dl_pdf  = get_field( 'download_pdf' );
 					$dl_cats = get_the_terms( get_the_ID(), 'download_category' );
 					$cat_name = ( $dl_cats && ! is_wp_error( $dl_cats ) ) ? $dl_cats[0]->name : '';
+					$pdf_url  = is_array( $dl_pdf ) ? $dl_pdf['url'] : $dl_pdf;
+					$file_url = $pdf_url ? $pdf_url : $dl_file;
 				?>
 					<div class="dl-row">
 						<span class="dl-row__name"><?php echo esc_html( $dl_name ? $dl_name : get_the_title() ); ?></span>
 						<span class="dl-row__cat"><?php echo esc_html( $cat_name ); ?></span>
-						<?php if ( $dl_file ) : ?>
-							<a href="<?php echo esc_url( $dl_file ); ?>" target="_blank" rel="noopener noreferrer" class="dl-row__btn">Download File</a>
+						<?php if ( $file_url ) : ?>
+							<a href="<?php echo esc_url( $file_url ); ?>" target="_blank" rel="noopener noreferrer" class="dl-row__btn">Download File</a>
 						<?php endif; ?>
 					</div>
 				<?php endwhile; ?>

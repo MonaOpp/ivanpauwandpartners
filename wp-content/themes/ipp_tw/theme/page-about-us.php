@@ -18,10 +18,10 @@ get_header();
 	<?php if ( $title || $description ) : ?>
 		<section class="w-full bg-white">
 			<div class="layout-wrapper mx-auto px-6 py-12">
-				<div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+				<div class="grid grid-cols-1 gap-8 md:grid-cols-[20%_1fr]">
 					<div>
 						<?php if ( $title ) : ?>
-							<h2 class="text-3xl font-bold text-[#132E47] md:text-4xl">
+							<h2 class="text-left text-3xl font-bold text-[#132E47] md:text-4xl">
 								<?php echo esc_html( $title ); ?>
 							</h2>
 						<?php endif; ?>
@@ -48,7 +48,10 @@ get_header();
 		$visual_image_url = $visual_image;
 	}
 	?>
+	<?php get_template_part( 'template-parts/content/content', 'team-timeline' ); ?>
 
+	<?php get_template_part( 'template-parts/content/content', 'team-grid' ); ?>
+	
 	<?php if ( $visual_image_url || $visual_description ) : ?>
 		<section class="w-full bg-[#18273A]" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
 			<div class="layout-wrapper mx-auto px-6 py-16">
@@ -63,7 +66,7 @@ get_header();
 					</div>
 					<div>
 						<?php if ( $visual_description ) : ?>
-							<div class="prose max-w-none text-white">
+							<div class="prose max-w-none text-white [&_h3]:text-white [&_h3]:text-5xl [&_h3]:font-bold">
 								<?php echo wp_kses_post( $visual_description ); ?>
 							</div>
 						<?php endif; ?>
@@ -73,11 +76,11 @@ get_header();
 		</section>
 	<?php endif; ?>
 
-	<?php get_template_part( 'template-parts/content/content', 'team-timeline' ); ?>
+	
 
 	<?php get_template_part( 'template-parts/content/content', 'sa-map' ); ?>
 
-	<?php get_template_part( 'template-parts/content/content', 'team-grid' ); ?>
+
 <?php
 
 get_footer();

@@ -111,6 +111,22 @@ while ( have_posts() ) :
 	endif;
 	?>
 
+	<!-- CTA Banner -->
+	<?php
+	$contact_page = get_permalink( get_page_by_path( 'contact-us' ) );
+	if ( ! $contact_page ) {
+		$contact_page = home_url( '/contact-us/' );
+	}
+	?>
+	<section class="cta-banner" style="background-color: #AA7040;">
+		<div class="layout-wrapper mx-auto px-6">
+			<div class="cta-banner__inner">
+				<h4 class="cta-banner__title">Need Expert Legal Guidance?</h4>
+				<a href="<?php echo esc_url( $contact_page ); ?>" class="cta-banner__btn">Contact Us</a>
+			</div>
+		</div>
+	</section>
+
 <?php endwhile; ?>
 
 <?php
