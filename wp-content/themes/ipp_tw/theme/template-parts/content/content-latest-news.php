@@ -45,10 +45,8 @@ $pages   = max( 1, $total - $visible + 1 );
 	@media (min-width: 1024px) { .news-carousel__slide { flex: 0 0 33.333%; max-width: 33.333%; } }
 	.news-carousel__slide .slide-image { height: 220px; transition: height 0.4s ease; }
 	.news-carousel__slide.slide-active .slide-image { height: 300px; }
+	.news-carousel__slide:hover .slide-image { height: 300px; }
 	.news-carousel__track { min-height: 300px; }
-	.news-carousel__slide:not(.slide-active) .slide-title-bar { opacity: 0 !important; pointer-events: none; }
-	.news-carousel__slide:not(.slide-active) .slide-hover-overlay { display: none !important; }
-	.news-carousel__slide:not(.slide-active) .group:hover img { transform: none !important; }
 	.news-carousel__dot { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; }
 	.news-carousel__dot.dot-active { background-color: #AA7040; border: 3px solid #AA7040; }
 	.news-carousel__dot.dot-inactive { background-color: transparent; border: 1px solid #AA7040; }

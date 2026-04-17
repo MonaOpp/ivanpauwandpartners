@@ -75,13 +75,13 @@ $practice_areas = get_posts(
 	<?php if ( $term->description ) : ?>
 		<section class="w-full bg-[#18273A]" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
 			<div class="layout-wrapper mx-auto px-6 py-20">
-				<div class="grid grid-cols-1 items-start gap-8 md:grid-cols-3">
+				<div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-[20%_1fr]">
 					<div>
 						<h2 class="text-lg font-extrabold uppercase text-white md:text-xl text-left">
 							<?php echo esc_html( $term->name ); ?>
 						</h2>
 					</div>
-					<div class="md:col-span-2">
+					<div>
 						<div class="prose max-w-none text-white text-sm leading-relaxed">
 							<?php echo wp_kses_post( $term->description ); ?>
 						</div>
@@ -93,7 +93,7 @@ $practice_areas = get_posts(
 
 	<!-- Practice area tab buttons (anchors) -->
 	<?php if ( ! empty( $practice_areas ) ) : ?>
-		<section class="w-full bg-[#F7F7F7] py-6" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
+		<section class="w-full bg-[#F7F7F7] py-6 sticky top-0 z-40" style="width:100vw;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%);">
 			<div class="layout-wrapper mx-auto px-6">
 				<div class="flex flex-wrap justify-center gap-3">
 					<?php foreach ( $practice_areas as $i => $pa ) :
@@ -123,7 +123,7 @@ $practice_areas = get_posts(
 			$slug     = sanitize_title( $display );
 			$is_odd   = ( $pa_index % 2 === 0 ); // 0-based: first item (0) is "odd" visually = white
 			$bg_class = $is_odd ? 'bg-white' : 'bg-[#18273A]';
-			$txt_class = $is_odd ? 'text-[#3A5F82]' : 'text-white';
+			$txt_class = $is_odd ? 'text-[#3A5F82]' : 'text-[#AA7040]';
 			$desc_class = $is_odd ? 'text-[#374151]' : 'text-white/80';
 			$title_class = $is_odd ? 'text-[#18273A]' : 'text-white';
 			$num_class = $is_odd ? 'text-[#000]' : 'text-white';

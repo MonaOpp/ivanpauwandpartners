@@ -85,14 +85,14 @@
 					aria-hidden="true"
 				>
 			</a>
-			<a href="tel:" aria-label="<?php esc_attr_e( 'Phone', 'ipp_tw' ); ?>">
+			<a href="tel:0123699180" aria-label="<?php esc_attr_e( 'Phone', 'ipp_tw' ); ?>">
 				<img
 					src="<?php echo esc_url( content_url( '/uploads/2026/04/phone.png' ) ); ?>"
 					alt=""
 					aria-hidden="true"
 				>
 			</a>
-			<a href="mailto:" aria-label="<?php esc_attr_e( 'Email', 'ipp_tw' ); ?>">
+			<a href="mailto:info@ippartners.co.za" aria-label="<?php esc_attr_e( 'Email', 'ipp_tw' ); ?>">
 				<img
 					src="<?php echo esc_url( content_url( '/uploads/2026/04/mail.png' ) ); ?>"
 					alt=""

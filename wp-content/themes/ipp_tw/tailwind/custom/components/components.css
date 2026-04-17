@@ -680,6 +680,14 @@ body.single-post .cta-banner__inner {
 	border-color: #AA7040;
 }
 
+.team-timeline__track .team-timeline__slider > div:first-child {
+	justify-content: flex-start;
+}
+
+.team-timeline__track .team-timeline__slider > div:last-child {
+	justify-content: flex-end;
+}
+
 .team-timeline-swiper {
 	overflow: hidden;
 }
@@ -696,7 +704,10 @@ body.single-post .cta-banner__inner {
 	background: #D8D8D8;
 	border-radius: 8px;
 	overflow: hidden;
-	border: 1px solid #3A5F82;
+	
+}
+.team-card__image-wrap{
+	border: 3px solid #3A5F82;
 }
 
 .team-card__image-wrap {
@@ -765,6 +776,7 @@ body.single-post .cta-banner__inner {
 .team-card__title {
 	font-size: 16px;
 	color: #fff;
+	margin: 0;
 }
 
 /* ── Bio Popup ──────────────────────────────────────────────── */
@@ -1625,18 +1637,46 @@ h4.insight-card__title {
 	border-radius: 4px;
 	text-decoration: none;
 	color: #333;
-	background: #f0f0f0;
+	background: transparent;
 	transition: background 0.2s, color 0.2s;
 }
 
 .dl-pagination li span.current {
-	background: #3A5F82;
-	color: #fff;
+
+	color: #000;
 }
 
 .dl-pagination li a:hover {
-	background: #3A5F82;
+	color: #000;
+}
+
+/* Dark section (Court Judgments) pagination */
+.dl-list--dark ~ .dl-bottom .dl-pagination li a,
+.dl-list--dark ~ .dl-bottom .dl-pagination li span {
 	color: #fff;
+}
+
+.dl-list--dark ~ .dl-bottom .dl-pagination li span.current {
+
+	color: #fff;
+}
+
+/* Read More button */
+.dl-readmore-btn {
+	display: inline-block;
+	padding: 0.5rem 1.5rem;
+	background: #AA7040;
+	color: #fff;
+	font-size: 0.85rem;
+	font-weight: 600;
+	border-radius: 4px;
+	text-decoration: none;
+	transition: background 0.2s;
+	white-space: nowrap;
+}
+
+.dl-readmore-btn:hover {
+	background: #8a5a33;
 }
 
 /* Section heading (Court Judgments) */
@@ -1691,6 +1731,7 @@ h4.insight-card__title {
 
 .contact-info__desc p {
 	margin: 0 0 1rem;
+	padding-top:20px;
 }
 
 .contact-info__item {

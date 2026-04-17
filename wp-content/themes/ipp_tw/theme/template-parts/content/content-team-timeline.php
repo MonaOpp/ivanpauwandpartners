@@ -93,7 +93,7 @@ $total  = count( $team_members );
 					<?php foreach ( $team_members as $i => $member ) :
 						$timeline = get_field( 'tm_timeline_', $member->ID );
 					?>
-						<div class="team-timeline__desc text-xs leading-relaxed text-[#6B7280] text-center transition-opacity duration-300 md:text-sm<?php echo 0 !== $i ? ' opacity-30' : ''; ?>" data-desc="<?php echo esc_attr( $i ); ?>">
+						<div class="team-timeline__desc text-xs leading-relaxed text-[#6B7280] text-left transition-opacity duration-300 md:text-sm<?php echo 0 !== $i ? ' opacity-30' : ''; ?>" data-desc="<?php echo esc_attr( $i ); ?>">
 							<?php echo wp_kses_post( $timeline ); ?>
 						</div>
 					<?php endforeach; ?>
