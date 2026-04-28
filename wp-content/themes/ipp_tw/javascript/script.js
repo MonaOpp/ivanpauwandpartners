@@ -224,6 +224,107 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 		return d.innerHTML;
 	}
 
+	// ── Looping intro animation ───────────────────────────────────
+	// Provinces pulse one-by-one on a loop until a user clicks a province.
+	// Gauteng sidebar content is shown immediately while the animation runs.
+	const animOrder = [
+		'limpopo', 'north-west', 'gauteng', 'mpumalanga',
+		'free-state', 'kwazulu-natal', 'nothern-cape',
+		'eastern-cape', 'western-cape',
+	];
+	const STEP_DELAY    = 700;  // ms between each province lighting up
+	const HOLD_DURATION = 800;  // ms each province stays highlighted
+	const LOOP_PAUSE    = 0;    // ms gap before the loop restarts
+
+	let animRunning   = true;
+	let animTimeouts  = [];
+	let animLoopTimer = null;
+
+	function clearAnimTimers() {
+		animTimeouts.forEach( clearTimeout );
+		animTimeouts = [];
+		clearTimeout( animLoopTimer );
+	}
+
+	function stopAnimation() {
+		animRunning = false;
+		clearAnimTimers();
+		// Remove any lingering animation highlights.
+		animOrder.forEach( ( slug ) => {
+			if ( pathBySlug[ slug ] ) {
+				pathBySlug[ slug ].classList.remove( 'province-active' );
+			}
+		} );
+	}
+
+	function runAnimLoop() {
+		if ( ! animRunning ) {
+			return;
+		}
+
+		animOrder.forEach( ( slug, i ) => {
+			if ( ! pathBySlug[ slug ] ) {
+				return;
+			}
+
+			// Light up.
+			const t1 = setTimeout( () => {
+				if ( animRunning ) {
+					pathBySlug[ slug ].classList.add( 'province-active' );
+				}
+			}, i * STEP_DELAY );
+
+			// Dim down.
+			const t2 = setTimeout( () => {
+				if ( animRunning ) {
+					pathBySlug[ slug ].classList.remove( 'province-active' );
+				}
+			}, i * STEP_DELAY + HOLD_DURATION );
+
+			animTimeouts.push( t1, t2 );
+		} );
+
+		// Schedule the next loop iteration.
+		animLoopTimer = setTimeout( () => {
+			if ( animRunning ) {
+				animTimeouts = [];
+				runAnimLoop();
+			}
+		}, animOrder.length * STEP_DELAY + HOLD_DURATION + LOOP_PAUSE );
+	}
+
+	// Show Gauteng sidebar immediately without locking the map.
+	( function showGautengSidebar() {
+		const gautengData = ( window.ippMapData && window.ippMapData[ 'gauteng' ] ) || null;
+		sidebar.defaultEl.classList.add( 'hidden' );
+		sidebar.infoEl.classList.remove( 'hidden' );
+		sidebar.nameEl.textContent = gautengData ? gautengData.label : 'Gauteng';
+		sidebar.listEl.innerHTML   = '';
+		sidebar.btnEl.innerHTML    = '';
+		sidebar.btnEl.classList.add( 'hidden' );
+
+		if ( gautengData && gautengData.flagships && gautengData.flagships.length ) {
+			sidebar.emptyEl.classList.add( 'hidden' );
+			gautengData.flagships.slice( 0, 5 ).forEach( ( f ) => {
+				const li = document.createElement( 'li' );
+				li.className = 'inline-block';
+				let html = '';
+				if ( f.image ) {
+					html += '<img src="' + escHtml( f.image ) + '" alt="' + escHtml( f.title ) + '" style="width:120px;height:130px;border-radius:8px;object-fit:cover;display:block;" />';
+				}
+				li.innerHTML = html;
+				sidebar.listEl.appendChild( li );
+			} );
+			sidebar.btnEl.innerHTML = '<a href="' + escHtml( window.ippFlagshipUrl || '/flagship-projects/' ) + '" style="display:inline-block;padding:20px;border-radius:10px;background-color:#AA7040;color:#fff;text-decoration:none;font-size:14px;font-weight:600;">View Projects</a>';
+			sidebar.btnEl.classList.remove( 'hidden' );
+		} else {
+			sidebar.emptyEl.classList.remove( 'hidden' );
+		}
+	} )();
+
+	// Start the looping animation.
+	runAnimLoop();
+
 	// ── Map path events ──────────────────────────────────────────
 	Object.entries( pathBySlug ).forEach( ( [ slug, path ] ) => {
 		path.addEventListener( 'mouseenter', () => {
@@ -241,6 +342,7 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 		} );
 
 		path.addEventListener( 'click', () => {
+			stopAnimation();
 			lockProvince( slug );
 		} );
 	} );
@@ -248,12 +350,10 @@ document.querySelectorAll( '#flyout-menu .menu-item-has-children > a' ).forEach(
 	// ── Sidebar button events ────────────────────────────────────
 	buttons.forEach( ( btn ) => {
 		btn.addEventListener( 'click', () => {
+			stopAnimation();
 			lockProvince( btn.dataset.province );
 		} );
 	} );
-
-	// ── Activate Gauteng on page load ────────────────────────────
-	lockProvince( 'gauteng' );
 } )();
 
 /* =================================================================

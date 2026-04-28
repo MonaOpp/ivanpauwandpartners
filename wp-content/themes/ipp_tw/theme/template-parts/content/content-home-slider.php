@@ -86,22 +86,22 @@ if ( is_array( $email ) ) {
 			<div class="slider-social">
 				<?php if ( $facebook_link ) : ?>
 					<a href="<?php echo esc_url( $facebook_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Facebook', 'ipp_tw' ); ?>">
-						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/facebook.png' ) ); ?>" alt="Facebook">
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/facebook-1.png' ) ); ?>" alt="Facebook">
 					</a>
 				<?php endif; ?>
 				<?php if ( $instagram_link ) : ?>
 					<a href="<?php echo esc_url( $instagram_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Instagram', 'ipp_tw' ); ?>">
-						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/Subtract.png' ) ); ?>" alt="Instagram">
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/Subtract-1.png' ) ); ?>" alt="Instagram">
 					</a>
 				<?php endif; ?>
 				<?php if ( $tel_number ) : ?>
 					<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $tel_number ) ); ?>" aria-label="<?php esc_attr_e( 'Phone', 'ipp_tw' ); ?>">
-						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/phone-1.png' ) ); ?>" alt="Phone">
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/phone-2.png' ) ); ?>" alt="Phone">
 					</a>
 				<?php endif; ?>
 				<?php if ( $email ) : ?>
 					<a href="mailto:<?php echo esc_attr( $email ); ?>" aria-label="<?php esc_attr_e( 'Email', 'ipp_tw' ); ?>">
-						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/mail-1.png' ) ); ?>" alt="Email">
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/mail-2.png' ) ); ?>" alt="Email">
 					</a>
 				<?php endif; ?>
 			</div>
