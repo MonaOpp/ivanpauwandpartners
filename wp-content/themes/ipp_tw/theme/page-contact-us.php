@@ -85,7 +85,7 @@ $pa_categories = get_terms(
 											<?php echo esc_html( $pa_cat->name ); ?>
 									</h3>
 									<?php if ( $pa_cat->description ) : ?>
-										<p class="contact-pa-card__desc">
+										<p class="contact-pa-card__desc text-xl ">
 											<?php echo esc_html( wp_trim_words( wp_strip_all_tags( $pa_cat->description ), 30, '...' ) ); ?>
 										</p>
 									<?php endif; ?>

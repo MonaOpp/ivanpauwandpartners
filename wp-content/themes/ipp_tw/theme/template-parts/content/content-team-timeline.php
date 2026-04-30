@@ -38,7 +38,7 @@ $total  = count( $team_members );
 					<span class="block font-extrabold uppercase text-[#3A5F82]">OUR</span>
 					<span class="block font-semibold uppercase italic text-[#AA7040]">TEAM</span>
 				</h2>
-				<p class="mt-4 text-sm leading-relaxed text-[#132E47]">
+				<p class="mt-4 text-xl leading-relaxed text-[#132E47]">
 					Ivan Pauw &amp; Partner's commitment is reflected in the progression of key individuals within the organisation
 				</p>
 

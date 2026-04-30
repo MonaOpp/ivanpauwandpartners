@@ -1784,7 +1784,7 @@ h4.insight-card__title {
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-	font-size: 0.9rem;
+	@apply text-xl;
 	color: #3A5F82;
 	text-decoration: none;
 	margin-bottom: 0.5rem;
@@ -1796,8 +1796,7 @@ h4.insight-card__title {
 }
 
 .contact-info__icon {
-	width: 1rem;
-	height: 1rem;
+	@apply w-5 h-5;
 	flex-shrink: 0;
 }
 
@@ -1877,7 +1876,7 @@ h3.contact-pa-card__title {
 }
 
 .contact-pa-card__desc {
-	font-size: 0.82rem;
+	@apply text-xl;
 	color: #666;
 	line-height: 1.6;
 	margin: 0;
