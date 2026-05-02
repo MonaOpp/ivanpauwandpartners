@@ -52,7 +52,7 @@ $pa_categories = get_terms(
 				<div class="contact-info">
 
 					<?php if ( $description ) : ?>
-						<div class="contact-info__desc">
+						<div class="contact-info__desc text-[50px] md:text-7xl ">
 							<?php echo wp_kses_post( $description ); ?>
 						</div>
 					<?php endif; ?>

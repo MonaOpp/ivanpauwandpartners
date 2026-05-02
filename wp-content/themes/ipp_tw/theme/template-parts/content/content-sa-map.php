@@ -71,7 +71,7 @@ $provinces = array(
 
 				<!-- Province detail (hidden until a province is selected) -->
 				<div id="sa-map-info" class="hidden">
-					<h2 class="text-left">OUR provincial <br>success</h2>
+					<h2 class="text-left text-[50px] md:text-7xl font-bold">OUR provincial <br>success</h2>
 					<h3 id="sa-map-province-name" class="mb-4 text-2xl font-bold text-[#0D1622] text-left"></h3>
 					<ul id="sa-map-flagship-list" class="list-none p-0 flex flex-wrap gap-4"></ul>
 					<div id="sa-map-flagship-btn" class="hidden" style="margin-top:16px;"></div>

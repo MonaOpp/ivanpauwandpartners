@@ -2,6 +2,8 @@
  * Custom styles to immediately follow Tailwind’s `base` layer
  */
 
+@layer base {
+
 /**
  * This uses the background and foreground colors declared in the `theme.json`
  * file and is applied both to the front end and in the block editor.
@@ -10,6 +12,13 @@ body {
 	@apply bg-background text-foreground font-sans;
 }
 
+}
+
+/**
+ * Heading defaults — kept OUTSIDE of @layer base so they win over Tailwind v4
+ * preflight, which sets `h1..h6 { font-size: inherit }` as unlayered CSS.
+ * Unlayered rules always beat layered rules in the cascade.
+ */
 h1 {
 	font-family: 'DM Sans', sans-serif;
 	font-weight: 700;
@@ -35,4 +44,14 @@ h3 {
 	text-align: center;
 	text-transform: uppercase;
 	color: #3A5F82;
+}
+
+h2 {
+	font-size: 70px;
+}
+
+@media (max-width: 767px) {
+	h2 {
+		font-size: 50px;
+	}
 }

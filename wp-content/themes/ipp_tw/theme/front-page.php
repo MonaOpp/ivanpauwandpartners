@@ -45,7 +45,7 @@ get_header();
                 ?>
 
                 <div class=" bg-white px-10 py-20 text-center">
-                    <h2 class="layout-wrapper m-0 text-6xl leading-none tracking-wide md:text-6xl "> 
+                    <h2 class="layout-wrapper m-0 text-[50px] md:text-7xl leading-none tracking-wide "> 
                         <span class="font-extrabold uppercase text-[#3A5F82]">OUR KEY </span>
                         <span class="font-semibold uppercase italic text-[#AA7040]">PRACTICE AREAS</span>
                         <span class="font-extrabold text-[#132E47]"></span>

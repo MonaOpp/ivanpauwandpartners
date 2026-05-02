@@ -459,6 +459,25 @@ body.home #page.layout-wrapper {
 	margin: 0 1rem;
 }
 
+.slider-cta {
+	color: #fff;
+	font-family: 'DM Sans', sans-serif;
+	font-size: 0.85rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	text-decoration: none;
+	padding: 0.75rem 1.75rem;
+	border: 1px solid #fff;
+	border-radius: 4px;
+	transition: background-color 0.2s, color 0.2s;
+}
+
+.slider-cta:hover {
+	background-color: #fff;
+	color: #3A5F82;
+}
+
 .slider-social {
 	display: flex;
 	align-items: center;
@@ -505,7 +524,7 @@ body.home #page.layout-wrapper {
 @media (max-width: 767px) {
 	.home-slide {
 		min-height: 500px;
-		padding: 100px 0 160px;
+		padding: 170px 0 160px;
 	}
 
 	.page-banner {
@@ -517,11 +536,16 @@ body.home #page.layout-wrapper {
 		bottom: 2rem;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 1rem;
+		gap: 0.75rem;
 	}
 
 	.slider-nav {
 		padding-left: 1rem;
+	}
+
+	.slider-prev,
+	.slider-next {
+		padding: 0.5rem 0;
 	}
 
 	.slider-social {
@@ -538,7 +562,7 @@ body.home #page.layout-wrapper {
 .home-slide__overlay {
 	position: absolute;
 	inset: 0;
-	background: #0000009C;
+	background: #00000080;
 }
 
 .home-slide__content {
@@ -563,6 +587,7 @@ body.home #page.layout-wrapper {
 	font-style: italic;
 }
 
+.home-slide__content h1,
 .home-slide__content h2 {
 	font-family: 'DM Sans', sans-serif;
 	font-weight: 700;
@@ -573,15 +598,18 @@ body.home #page.layout-wrapper {
 }
 
 @media (max-width: 767px) {
-	.home-slide__content h2 {
-		font-size: 28px;
-		line-height: 1.2;
-	}
-
 	.home-slide__content h1,
 	.home-slide__content h2 {
 		padding-left: 1rem;
 		line-height: 1.2;
+	}
+
+	.home-slide__content h2 {
+		font-size: 25px;
+	}
+
+	.home-slide__content h1 {
+		font-size: 80px;
 	}
 }
 
@@ -683,7 +711,7 @@ body.single-post .cta-banner__inner {
    ============================================================= */
 
 .team-timeline__heading {
-	font-size: 64px;
+
 	line-height: 1;
 	margin: 0;
 	text-align: left;
@@ -965,7 +993,7 @@ body.single-post .cta-banner__inner {
 	padding: 8px 0;
 	background: none;
 	border: none;
-	font-size: 15px;
+	font-size: 20px;
 	color: #6B7280;
 	cursor: pointer;
 	transition: color 0.2s ease;
@@ -1137,7 +1165,7 @@ h3.flagship-card__title {
 	padding: 0.5rem 1.25rem;
 	border: 1px solid #D1D5DB;
 	border-radius: 8px;
-	font-size: 0.8rem;
+	font-size: 16px;
 	font-weight: 600;
 	color: #374151;
 	background: #fff;
@@ -1181,7 +1209,8 @@ h3.flagship-card__title {
 
 /* Right column with scrollable repeater */
 .pa-section__right {
-	max-height: 340px;
+	--pa-row-height: 110px;
+	max-height: calc(var(--pa-row-height) * 6);
 	overflow-y: auto;
 	padding-right: 0.5rem;
 }
@@ -1207,7 +1236,9 @@ h3.flagship-card__title {
 	grid-template-columns: 4rem 1fr 1fr;
 	align-items: start;
 	gap: 1.5rem;
-	padding: 1.5rem 0;
+	padding: 1.25rem 0;
+	min-height: var(--pa-row-height, 110px);
+	box-sizing: border-box;
 	border-bottom: 1px solid #E5E7EB;
 }
 
@@ -1216,14 +1247,14 @@ h3.flagship-card__title {
 }
 
 .pa-info-row__number {
-	font-size: 1.1rem;
+	font-size: 24px;
 	font-weight: 700;
 	color: #000;
 	flex-shrink: 0;
 }
 
 .pa-info-row__title {
-	font-size: 1rem;
+	font-size: 24px;
 	font-weight: 700;
 	color: #18273A;
 	margin: 0;
@@ -1231,7 +1262,7 @@ h3.flagship-card__title {
 }
 
 .pa-info-row__desc {
-	font-size: 0.8rem;
+	font-size: 18px;
 	line-height: 1.6;
 	color: #6B7280;
 	margin: 0;
@@ -1318,7 +1349,7 @@ h3.flagship-card__title {
 	padding: 0.6rem 0;
 	color: #0D162266;
 	text-decoration: none;
-	font-size: 0.85rem;
+	font-size: 20px;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 	transition: color 0.2s;
 }
@@ -1326,7 +1357,7 @@ h3.flagship-card__title {
 .insight-cat-link:first-child {
 	font-weight: 700;
 	color: #0D1622;
-	font-size: 0.9rem;
+	font-size:20px;
 }
 
 .insight-cat-link:hover,
@@ -1769,12 +1800,21 @@ h4.insight-card__title {
 }
 
 .contact-info__desc {
-	font-size: 0.9rem;
+	
 	color: #555;
 	line-height: 1.7;
 	margin-bottom: 1.5rem;
 }
+.contact-info__desc h4 {
+	font-size: 50px;
+	line-height: 1.1;
+}
 
+@media (min-width: 768px) {
+	.contact-info__desc h4 {
+		font-size: 72px;
+	}
+}
 .contact-info__desc p {
 	margin: 0 0 1rem;
 	padding-top:20px;
@@ -1902,6 +1942,6 @@ input#gform_submit_button_1 {
 
 @media (max-width: 767px) {
 	#sa-map-info h2 {
-		font-size: 28px;
+		font-size: 50px;
 	}
 }

@@ -56,7 +56,7 @@ $pages   = max( 1, $total - $visible + 1 );
 	<div class="layout-wrapper mx-auto px-6">
 
 		<!-- Heading -->
-		<h2 class="m-0 mb-10 text-5xl leading-tight tracking-wide md:text-6xl text-left">
+		<h2 class="m-0 mb-10 text-[50px] md:text-7xl leading-tight tracking-wide text-left">
 			<span class="font-extrabold uppercase text-[#3A5F82]">LATEST </span>
 			<span class="font-semibold uppercase italic text-[#3A5F82]">LEGAL NEWS &</span><br>
 			<span class="font-semibold uppercase italic text-[#AA7040]">INSIGHTS</span>

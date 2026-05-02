@@ -32,7 +32,7 @@ $total = count( $team_members );
 	<div class="layout-wrapper mx-auto px-6">
 
 		<!-- Heading -->
-		<h2 class="mb-10 text-left text-4xl font-bold uppercase leading-tight text-[#132E47] md:text-5xl">
+		<h2 class="mb-10 text-left text-[50px] md:text-7xl font-bold uppercase leading-tight text-[#132E47] md:text-5xl">
 			<span class="text-[#3A5F82]">OUR</span> <span class="italic text-[#AA7040]">TEAM OF<br>ATTORNEYS</span>
 		</h2>
 
@@ -51,16 +51,20 @@ $total = count( $team_members );
 					} elseif ( is_string( $image ) ) {
 						$image_url = $image;
 					}
+
+					// Skip team members without an image.
+					if ( empty( $image_url ) ) {
+						continue;
+					}
+
 					$display_name = $name ? $name : $member->post_title;
 				?>
 						<div class="team-card" data-team-index="<?php echo esc_attr( $index ); ?>">
 							<!-- Image -->
 							<div class="team-card__image-wrap">
-								<?php if ( $image_url ) : ?>
-									<img src="<?php echo esc_url( $image_url ); ?>"
-										 alt="<?php echo esc_attr( $image_alt ); ?>"
-										 class="team-card__image" />
-								<?php endif; ?>
+								<img src="<?php echo esc_url( $image_url ); ?>"
+									 alt="<?php echo esc_attr( $image_alt ); ?>"
+									 class="team-card__image" />
 
 								<!-- Hover overlay -->
 								<div class="team-card__overlay">

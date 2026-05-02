@@ -75,14 +75,14 @@ $practice_areas = get_posts(
 	<?php if ( $term->description ) : ?>
 		<section class="w-full bg-[#18273A]" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
 			<div class="layout-wrapper mx-auto px-6 py-20">
-				<div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-[20%_1fr]">
+				<div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-[30%_1fr]">
 					<div>
-						<h2 class="text-lg font-extrabold uppercase text-white md:text-xl text-left">
+						<h2 class="text-lg font-extrabold uppercase text-white md:text-2xl text-left">
 							<?php echo esc_html( $term->name ); ?>
 						</h2>
 					</div>
 					<div>
-						<div class="prose max-w-none text-white text-sm leading-relaxed">
+						<div class="prose max-w-none text-white text-sm leading-relaxed text-xl">
 							<?php echo wp_kses_post( $term->description ); ?>
 						</div>
 					</div>
@@ -133,7 +133,7 @@ $practice_areas = get_posts(
 		<section class="w-full <?php echo $bg_class; ?> pa-section-wrapper" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
 			<div class="layout-wrapper mx-auto px-6">
 				<div class="pa-section" id="pa-<?php echo esc_attr( $slug ); ?>">
-					<div class="grid grid-cols-1 gap-10 lg:grid-cols-[20%_1fr]">
+					<div class="grid grid-cols-1 gap-10 lg:grid-cols-[30%_1fr]">
 
 						<!-- Left: title + description -->
 						<div class="pa-section__left">

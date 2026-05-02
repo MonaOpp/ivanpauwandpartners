@@ -34,7 +34,7 @@ $total  = count( $team_members );
 
 			<!-- Left column: heading + pagination -->
 			<div class="w-full lg:w-1/3">
-				<h2 class="team-timeline__heading">
+				<h2 class="team-timeline__heading text-[50px] md:text-7xl ">
 					<span class="block font-extrabold uppercase text-[#3A5F82]">OUR</span>
 					<span class="block font-semibold uppercase italic text-[#AA7040]">TEAM</span>
 				</h2>
@@ -66,10 +66,10 @@ $total  = count( $team_members );
 						$year = get_field( 'tm_year', $member->ID );
 					?>
 						<div class="team-timeline__name-col text-center transition-opacity duration-300<?php echo 0 !== $i ? ' opacity-30' : ''; ?>" data-member="<?php echo esc_attr( $i ); ?>">
-							<h3 class="text-sm font-bold uppercase tracking-wide text-[#132E47] md:text-base">
+							<h3 class="text-2xl font-bold uppercase tracking-wide text-[#132E47] md:text-base">
 								<?php echo esc_html( $name ? $name : $member->post_title ); ?>
 							</h3>
-							<p class="mt-1 text-xs font-semibold text-[#6B7280]">
+							<p class="mt-1 text-lg font-semibold text-[#6B7280]">
 								<?php echo esc_html( $year ); ?>
 							</p>
 						</div>

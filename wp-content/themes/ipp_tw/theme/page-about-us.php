@@ -66,7 +66,7 @@ get_header();
 					</div>
 					<div>
 						<?php if ( $visual_description ) : ?>
-							<div class="prose max-w-none text-white [&_h3]:text-white [&_h3]:text-5xl [&_h3]:font-bold">
+							<div class="prose max-w-none text-white [&_h3]:text-white [&_h3]:text-[50px] md:[&_h3]:text-7xl [&_h3]:font-bold">
 								<?php echo wp_kses_post( $visual_description ); ?>
 							</div>
 						<?php endif; ?>
