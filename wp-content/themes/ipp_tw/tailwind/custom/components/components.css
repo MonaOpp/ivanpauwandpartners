@@ -413,6 +413,15 @@ body.home #page.layout-wrapper {
 	position: relative;
 }
 
+.home-swiper .swiper-slide {
+	height: auto;
+	display: flex;
+}
+
+.home-swiper .swiper-slide > .home-slide {
+	width: 100%;
+}
+
 /* Slider bottom bar: prev/next left, social right */
 .slider-bottom-bar {
 	position: absolute;
@@ -498,10 +507,8 @@ body.home #page.layout-wrapper {
 }
 
 .slider-social img {
-	max-width: 100%;
-	max-height: 100%;
-	width: auto;
-	height: auto;
+	width: 40px;
+	height: 40px;
 	display: block;
 	object-fit: contain;
 	image-rendering: -webkit-optimize-contrast;
@@ -557,6 +564,37 @@ body.home #page.layout-wrapper {
 		width: 32px;
 		height: 32px;
 	}
+
+	.slider-social img {
+		width: 28px;
+		height: 28px;
+	}
+
+	.slider-cta {
+		margin-left: 1rem;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+	.home-slide {
+		min-height: 800px;
+		padding: 200px 0 100px;
+	}
+
+	.slider-bottom-bar {
+		bottom: 3rem;
+	}
+
+	.slider-nav {
+		padding-left: 2rem;
+	}
+
+	.home-slide__content h1,
+	.home-slide__content h2 {
+		padding-left: 2rem;
+		line-height: 1.2;
+		font-size: 60px;
+	}
 }
 
 .home-slide__overlay {
@@ -609,7 +647,7 @@ body.home #page.layout-wrapper {
 	}
 
 	.home-slide__content h1 {
-		font-size: 80px;
+		font-size: 40px;
 	}
 }
 
@@ -1136,6 +1174,7 @@ h3.flagship-card__title {
 	width: 21px;
 	height: 21px;
 	display: block;
+	object-fit: contain;
 	image-rendering: -webkit-optimize-contrast;
 	image-rendering: crisp-edges;
 }
@@ -1266,6 +1305,33 @@ h3.flagship-card__title {
 	line-height: 1.6;
 	color: #6B7280;
 	margin: 0;
+}
+
+@media (max-width: 767px) {
+	.pa-info-row {
+		grid-template-columns: auto 1fr;
+		grid-template-areas:
+			"number title"
+			"desc desc";
+		gap: 0.75rem 1rem;
+		min-height: 0;
+		padding: 1rem 0;
+	}
+
+	.pa-info-row__number {
+		grid-area: number;
+		font-size: 20px;
+	}
+
+	.pa-info-row__title {
+		grid-area: title;
+		font-size: 20px;
+	}
+
+	.pa-info-row__desc {
+		grid-area: desc;
+		font-size: 16px;
+	}
 }
 
 .footer-copyright {
@@ -1513,7 +1579,7 @@ h4.insight-card__title {
 .single-toc a {
 	display: block;
 	padding: 0.45rem 0;
-	font-size: 0.85rem;
+	font-size: 20px;
 	color: #898989;
 	text-decoration: none;
 	border-left: 2px solid transparent;
@@ -1530,7 +1596,7 @@ h4.insight-card__title {
 
 .single-toc a[data-level="3"] {
 	padding-left: 1.5rem;
-	font-size: 0.8rem;
+	font-size: 20px;
 }
 
 /* =============================================================
@@ -1656,14 +1722,14 @@ h4.insight-card__title {
 
 .dl-row__name {
 	flex: 1;
-	font-size: 0.85rem;
+	font-size: 18px;
 	color: #333;
 	line-height: 1.4;
 }
 
 .dl-row__cat {
 	flex: 0 0 160px;
-	font-size: 0.85rem;
+	font-size: 18px;
 	color: #666;
 	text-align: left;
 }

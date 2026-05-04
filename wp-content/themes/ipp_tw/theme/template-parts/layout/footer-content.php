@@ -8,6 +8,7 @@
  */
 
 $facebook_link  = function_exists( 'get_field' ) ? get_field( 'facebook_link', 'option' ) : '';
+$linkedin_link  = function_exists( 'get_field' ) ? get_field( 'linkedin', 'option' ) : '';
 $instagram_link = function_exists( 'get_field' ) ? get_field( 'instagram_link', 'option' ) : '';
 $tel_number     = function_exists( 'get_field' ) ? get_field( 'tel_number', 'option' ) : '';
 $email          = function_exists( 'get_field' ) ? get_field( 'email_', 'option' ) : '';
@@ -15,6 +16,9 @@ $email          = function_exists( 'get_field' ) ? get_field( 'email_', 'option'
 // ACF link fields may return arrays — extract the URL.
 if ( is_array( $facebook_link ) ) {
 	$facebook_link = $facebook_link['url'] ?? '';
+}
+if ( is_array( $linkedin_link ) ) {
+	$linkedin_link = $linkedin_link['url'] ?? '';
 }
 if ( is_array( $instagram_link ) ) {
 	$instagram_link = $instagram_link['url'] ?? '';
@@ -55,6 +59,11 @@ if ( is_array( $email ) ) {
 				<?php if ( $facebook_link ) : ?>
 					<a href="<?php echo esc_url( $facebook_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Facebook', 'ipp_tw' ); ?>">
 						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/facebook.png' ) ); ?>" alt="Facebook">
+					</a>
+				<?php endif; ?>
+				<?php if ( $linkedin_link ) : ?>
+					<a href="<?php echo esc_url( $linkedin_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'LinkedIn', 'ipp_tw' ); ?>">
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/05/linkedin.png' ) ); ?>" alt="LinkedIn">
 					</a>
 				<?php endif; ?>
 				<?php if ( $instagram_link ) : ?>

@@ -14,7 +14,7 @@ if ( ! function_exists( 'have_rows' ) || ! have_rows( 'slider_banner', 'option' 
 }
 
 $facebook_link  = function_exists( 'get_field' ) ? get_field( 'facebook_link', 'option' ) : '';
-$linkedin_link  = function_exists( 'get_field' ) ? get_field( 'linkedin_link', 'option' ) : '';
+$linkedin_link  = function_exists( 'get_field' ) ? get_field( 'linkedin', 'option' ) : '';
 $instagram_link = function_exists( 'get_field' ) ? get_field( 'instagram_link', 'option' ) : '';
 $tel_number     = function_exists( 'get_field' ) ? get_field( 'tel_number', 'option' ) : '';
 $email          = function_exists( 'get_field' ) ? get_field( 'email_', 'option' ) : '';
@@ -98,17 +98,17 @@ if ( is_array( $email ) ) {
 			<div class="slider-social">
 				<?php if ( $facebook_link ) : ?>
 					<a href="<?php echo esc_url( $facebook_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Facebook', 'ipp_tw' ); ?>">
-						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/facebook-1.png' ) ); ?>" alt="Facebook">
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/05/facebook-1.png' ) ); ?>" alt="Facebook">
 					</a>
 				<?php endif; ?>
 				<?php if ( $linkedin_link ) : ?>
 					<a href="<?php echo esc_url( $linkedin_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'LinkedIn', 'ipp_tw' ); ?>">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="24" height="24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/05/linkedin.png' ) ); ?>" alt="LinkedIn">
 					</a>
 				<?php endif; ?>
 				<?php if ( $instagram_link ) : ?>
 					<a href="<?php echo esc_url( $instagram_link ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Instagram', 'ipp_tw' ); ?>">
-						<img src="<?php echo esc_url( content_url( '/uploads/2026/04/Subtract-1.png' ) ); ?>" alt="Instagram">
+						<img src="<?php echo esc_url( content_url( '/uploads/2026/05/instagram.png' ) ); ?>" alt="Instagram">
 					</a>
 				<?php endif; ?>
 				<?php if ( $tel_number ) : ?>
